@@ -1,6 +1,6 @@
 # a11yBuddy
 
-a11yBuddy is a web application that helps developers to document and test the accessibility of their own applications by testing precise workflows. With time, it will evolve into a community platform, where developers and users alike can meet, learn and share their experiences, working together to improve the accessibility of software applications all over the world. 
+a11yBuddy is a web application that helps developers to document and test the accessibility of their own applications by utilising precise workflows and user stories. With time, it will evolve into a community platform, where developers and users alike can meet, learn and share their experiences, working together to improve the accessibility of software applications all over the world. 
 
 This is a small revolution in the space of digital accessibility, because together and for the very first time, using a11yBuddy, we will build a huge database of real-world accessibility problems and good examples - that, unlike most audit results, will be understandible and actionable for developers and help users make informed decisions about whether a software is accessible for them, before having to spend several hours and possibly lots of frustration on trying it out. 
 
