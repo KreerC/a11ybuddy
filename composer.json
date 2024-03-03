@@ -1,0 +1,12 @@
+{
+    "name": "kreerc/a11ybuddy",
+    "description": "A platform for documenting and discussing digital accessibility for developers and users alike",
+    "type": "project",
+    "license": "Apache 2.0 License",
+    "autoload": {
+        "psr-4": {
+            "A11yBuddy\\": "src/A11yBuddy/"
+        }
+    },
+    "require": {}
+}
