@@ -20,15 +20,39 @@ namespace A11yBuddy;
 
 /**
  * The starting point of the application.
- * Defines some basic configuration and starts the application.
+ * Defines some basic configuration.
+ * 
+ * This class is a singleton. Use Application::getInstance() to get the current instance.
  */
-class Application {
+class Application
+{
 
     const VERSION = "0.0.1";
     const NAME = "a11yBuddy";
 
-    public function __construct() {
-        echo self::NAME . " v" . self::VERSION . " is up and running.";
+    private static $instance = null;
+
+    private $templateRenderer;
+
+    public function __construct()
+    {
+        self::$instance = $this;
+
+        $this->templateRenderer = new TemplateRenderer();
+        $this->templateRenderer->render();
+    }
+
+    /**
+     * Singleton method to get the current instance of the Application.
+     * 
+     * @return Application The current instance of the Application.
+     */
+    public static function getInstance(): Application
+    {
+        if (self::$instance === null) {
+            self::$instance = new Application();
+        }
+        return self::$instance;
     }
 
 }

@@ -8,5 +8,19 @@
             "A11yBuddy\\": "src/A11yBuddy/"
         }
     },
-    "require": {}
+    "scripts": {
+        "post-update-cmd": [
+            "rm -rf template/dependencies/",
+            "mkdir -p template/dependencies/",
+            "cp -r vendor/twbs/bootstrap/dist/ template/dependencies/bootstrap/"
+        ],
+        "post-install-cmd": [
+            "rm -rf template/dependencies/",
+            "mkdir -p template/dependencies/",
+            "cp -r vendor/twbs/bootstrap/dist/ template/dependencies/bootstrap/"
+        ]
+    },
+    "require": {
+        "twbs/bootstrap": "5.3.3"
+    }
 }
