@@ -18,9 +18,13 @@
             "rm -rf template/dependencies/",
             "mkdir -p template/dependencies/",
             "cp -r vendor/twbs/bootstrap/dist/ template/dependencies/bootstrap/"
-        ]
+        ],
+        "test": "./vendor/bin/phpunit tests"
     },
     "require": {
         "twbs/bootstrap": "5.3.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.0"
     }
 }

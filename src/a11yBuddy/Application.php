@@ -30,9 +30,8 @@ class Application
     const VERSION = "0.0.1";
     const NAME = "a11yBuddy";
 
-    private static $instance = null;
-
-    private $templateRenderer;
+    private static ?Application $instance = null;
+    private TemplateRenderer $templateRenderer;
 
     public function __construct()
     {
