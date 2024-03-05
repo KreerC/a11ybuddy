@@ -33,10 +33,22 @@ class Router
      * @param string $method The HTTP method of the route.
      * @param string $path The path of the route. You can use placeholders like {id}.
      * @param callable|array $handler The handler for the route. Can be a function or a class method.
+     * @param bool $override Whether to override an existing route. False by default.
+     * 
+     * @return bool Whether the route was added successfully.
      */
-    public function addRoute(string $method, string $path, callable|array $handler)
+    public function addRoute(string $method, string $path, callable|array $handler, bool $override = false): bool
     {
+        if (!isset($this->routes[$method])) {
+            return false;
+        }
+
+        if (isset($this->routes[$method][$path]) && !$override) {
+            return false;
+        }
+
         $this->routes[$method][$path] = $handler;
+        return true;
     }
 
     /**

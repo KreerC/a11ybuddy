@@ -22,6 +22,26 @@ use A11yBuddy\Router;
 class RouterTest extends TestCase
 {
 
+    public function testAddRoute()
+    {
+        $router = new Router();
+
+        $route = '/home';
+        $handler = function () {
+            return "Home route";
+        };
+        $result = $router->addRoute("GET", $route, $handler);
+        $this->assertTrue($result);
+
+        // Test not overriding the route
+        $result = $router->addRoute("GET", $route, $handler);
+        $this->assertFalse($result);
+
+        // Test overriding the route
+        $result = $router->addRoute("GET", $route, $handler, true);
+        $this->assertTrue($result);
+    }
+
     public function testRegularNoPlaceholderRoute()
     {
         $router = new Router();
