@@ -20,7 +20,12 @@ namespace A11yBuddy\Frontend\BasePage;
 
 use A11yBuddy\Frontend\BasePageRenderer;
 
-class PageStructure
+/**
+ * Class PageStructure
+ * 
+ * Renders the basic structure of a page and handles routing for the main content
+ */
+class BasePageController
 {
 
     private BasePageRenderer $renderer;
@@ -58,19 +63,21 @@ class PageStructure
         <html lang="en">
 
         <head>
-            <?php Head::render($data); ?>
+            <?php HeadView::render($data); ?>
         </head>
 
         <body>
-            <?php Navigation::render($data); ?>
+            <?php NavigationView::render($data); ?>
 
             <main>
-                <?php
-                $this->doRouting();
-                ?>
+                <div class="container">
+                    <?php
+                    $this->doRouting();
+                    ?>
+                </div>
             </main>
 
-            <?php Footer::render($data); ?>
+            <?php FooterView::render($data); ?>
         </body>
 
         </html>

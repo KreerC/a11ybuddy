@@ -18,24 +18,15 @@
 
 namespace A11yBuddy\Frontend\BasePage;
 
-use A11yBuddy\Application;
 use A11yBuddy\Frontend\View;
 
-class Footer implements View
+class HomepageView implements View
 {
 
     public static function render(array $data = [])
     {
         ?>
-        <footer>
-            <div class="container">
-                <p class="text-center">
-                    <?php echo Application::NAME . " - " . Application::VERSION; ?>
-                </p>
-            </div>
-            <script src="template/dependencies/jquery/jquery-3.5.1.min.js"></script>
-            <script src="template/dependencies/bootstrap/js/bootstrap.min.js"></script>
-        </footer>
+        <h1>Welcome to A11yBuddy</h1>
         <?php
     }
 

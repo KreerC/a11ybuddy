@@ -18,17 +18,21 @@
 
 namespace A11yBuddy\Frontend\BasePage;
 
+use A11yBuddy\Application;
 use A11yBuddy\Frontend\View;
 
-class Homepage implements View
+class HeadView implements View
 {
 
     public static function render(array $data = [])
     {
         ?>
-        <div class="container">
-            <h1>Welcome to A11yBuddy</h1>
-        </div>
+        <title>
+            <?php echo Application::NAME; ?>
+        </title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="template/dependencies/bootstrap/css/bootstrap.min.css" />
         <?php
     }
 

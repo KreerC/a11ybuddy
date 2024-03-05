@@ -18,24 +18,17 @@
 
 namespace A11yBuddy\Frontend\BasePage;
 
-use A11yBuddy\Application;
 use A11yBuddy\Frontend\View;
 
-class Navigation implements View
+class NotFoundView implements View
 {
 
     public static function render(array $data = [])
     {
         ?>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container">
-                <a class="navbar-brand" href="#">
-                    <?php echo Application::NAME; ?>
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"></button>
-            </div>
-        </nav>
+        <h1>Page Not Found</h1>
+        <p>The page you are looking for does not exist.</p>
+        <a href="/">Return to the homepage</a>
         <?php
     }
 

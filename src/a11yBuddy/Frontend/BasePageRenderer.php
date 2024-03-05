@@ -18,30 +18,36 @@
 
 namespace A11yBuddy\Frontend;
 
-use A11yBuddy\Frontend\BasePage\Homepage;
-use A11yBuddy\Frontend\BasePage\PageStructure;
+use A11yBuddy\Frontend\BasePage\BasePageController;
+use A11yBuddy\Frontend\BasePage\HomepageView;
+use A11yBuddy\Frontend\BasePage\NotFoundView;
 use A11yBuddy\Router;
 
 class BasePageRenderer
 {
 
     private Router $router;
-    private PageStructure $pageStructure;
+    private BasePageController $pageController;
 
     public function __construct()
     {
         $this->router = new Router();
-
         $this->registerRoutes();
 
-        $this->pageStructure = new PageStructure($this);
-
-        $this->pageStructure->render();
+        $this->pageController = new BasePageController($this);
+        $this->pageController->render();
     }
 
+    /**
+     * Central location for registering routes for the application
+     */
     private function registerRoutes()
     {
-        $this->router->addRoute("GET", "/", [Homepage::class, "render"]);
+        // Add special routes
+        $this->router->addRoute("GET", "/404", [NotFoundView::class, "render"]);
+
+        // All other routes
+        $this->router->addRoute("GET", "/", [HomepageView::class, "render"]);
     }
 
     /**

@@ -81,6 +81,12 @@ class Router
             }
         }
 
+        // Route to 404 if it exists
+        if (isset($this->routes["GET"]["/404"])) {
+            http_response_code(404);
+            return call_user_func_array($this->routes["GET"]["/404"], []);
+        }
+
         throw new \Exception("Route not found");
     }
 
