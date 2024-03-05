@@ -19,6 +19,8 @@
 namespace A11yBuddy\Frontend;
 
 use A11yBuddy\Frontend\BasePage\BasePageController;
+use A11yBuddy\Frontend\CreateProject\CreateProjectController;
+use A11yBuddy\Frontend\CreateProject\CreateProjectView;
 use A11yBuddy\Frontend\BasePage\HomepageView;
 use A11yBuddy\Frontend\BasePage\NotFoundView;
 use A11yBuddy\Router;
@@ -52,6 +54,9 @@ class BasePageRenderer
 
         // All other routes
         $this->router->addRoute("GET", "/", [HomepageView::class, "render"]);
+
+        $this->router->addRoute("GET", "/create", [CreateProjectView::class, "render"]);
+        $this->router->addRoute("POST", "/create", [CreateProjectController::class, "handleData"]);
     }
 
     /**

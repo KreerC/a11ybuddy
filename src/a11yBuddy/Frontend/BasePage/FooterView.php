@@ -27,7 +27,8 @@ class FooterView implements View
     public static function render(array $data = [])
     {
         ?>
-        <footer>
+        <footer class="mt-5">
+            <hr class="mb-3" aria-hidden="true">
             <div class="container">
                 <p class="text-center">
                     <?php echo Application::NAME . " - " . Application::VERSION; ?>

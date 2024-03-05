@@ -68,7 +68,7 @@ class BasePageController
             <?php NavigationView::render($data); ?>
 
             <main>
-                <div class="container">
+                <div class="container mt-3">
                     <?php
                     $this->doRouting();
                     ?>
