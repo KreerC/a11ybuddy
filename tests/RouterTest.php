@@ -73,4 +73,35 @@ class RouterTest extends TestCase
         $result = $router->handleRequest("GET", '/user/123/tests/456');
         $this->assertEquals("User 123, Test 456", $result);
     }
+
+    public function testSingleUnexpectedToken()
+    {
+        $router = new Router();
+
+        $route = '/user/{id}';
+
+        $router->addRoute("GET", $route, function ($params) {
+            return "User " . $params["id"];
+        });
+
+        // Test unexpected token in route
+        $this->expectException(\Exception::class);
+        $result = $router->handleRequest("GET", '/user/123$');
+    }
+
+    public function testMultipleUnexpectedTokens()
+    {
+        $router = new Router();
+
+        $route = '/user/{id}';
+
+        $router->addRoute("GET", $route, function ($params) {
+            return "User " . $params["id"];
+        });
+
+        // Test unexpected token in route with more special characters
+        $this->expectException(\Exception::class);
+        $result = $router->handleRequest("GET", '/user/!@#$%^&*()');
+    }
+
 }

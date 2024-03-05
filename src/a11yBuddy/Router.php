@@ -50,6 +50,7 @@ class Router
     {
         foreach ($this->routes[$method] as $route => $handler) {
             $pattern = $this->buildPattern($route);
+
             if (preg_match($pattern, $requestPath, $matches)) {
                 // Remove the full match
                 array_shift($matches);
@@ -80,7 +81,7 @@ class Router
     public function buildPattern(string $route): string
     {
         $pattern = preg_replace('/\//', '\\/', $route);
-        $pattern = preg_replace('/{([a-zA-Z0-9_]+)}/', '(?P<\1>[a-zA-Z0-9_]+)', $pattern);
+        $pattern = preg_replace('/{([a-zA-Z0-9_]+)}/', '(?P<$1>[a-zA-Z0-9_]+)', $pattern);
         $pattern = '/^' . $pattern . '$/';
         return $pattern;
     }
