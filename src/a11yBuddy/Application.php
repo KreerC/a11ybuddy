@@ -18,6 +18,8 @@
 
 namespace A11yBuddy;
 
+use A11yBuddy\Frontend\BasePageRenderer;
+
 /**
  * The starting point of the application.
  * Defines some basic configuration.
@@ -31,14 +33,22 @@ class Application
     const NAME = "a11yBuddy";
 
     private static ?Application $instance = null;
-    private TemplateRenderer $templateRenderer;
+
+    private BasePageRenderer $basePageRenderer;
 
     public function __construct()
     {
         self::$instance = $this;
 
-        $this->templateRenderer = new TemplateRenderer();
-        $this->templateRenderer->render();
+        $this->basePageRenderer = new BasePageRenderer();
+    }
+
+    /**
+     * @return BasePageRenderer
+     */
+    public function getBasePageRenderer(): BasePageRenderer
+    {
+        return $this->basePageRenderer;
     }
 
     /**
