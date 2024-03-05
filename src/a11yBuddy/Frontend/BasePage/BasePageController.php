@@ -45,14 +45,12 @@ class BasePageController
 
     public function doRouting()
     {
-        // Get the request URI
-        $uri = $_SERVER["REQUEST_URI"];
-        // Get the request type
-        $requestType = $_SERVER["REQUEST_METHOD"];
-        // Strip the query string from the URI
+        $uri = $_SERVER["REQUEST_URI"] ?? "/";
+        $requestType = $_SERVER["REQUEST_METHOD"] ?? "GET";
+
         $uri = explode("?", $uri)[0];
 
-        $this->renderer->getRouter()->handleRequest($requestType, $uri);
+        $this->getRenderer()->getRouter()->handleRequest($requestType, $uri);
     }
 
     public function render(array $data = [])

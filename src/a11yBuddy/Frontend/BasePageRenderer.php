@@ -35,6 +35,10 @@ class BasePageRenderer
         $this->registerRoutes();
 
         $this->pageController = new BasePageController($this);
+    }
+
+    public function render(): void
+    {
         $this->pageController->render();
     }
 
