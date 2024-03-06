@@ -20,6 +20,7 @@ namespace A11yBuddy\Frontend\BasePage;
 
 use A11yBuddy\Frontend\BasePageRenderer;
 use A11yBuddy\Frontend\Controller;
+use A11yBuddy\Frontend\Localize;
 use A11yBuddy\Router;
 
 /**
@@ -50,7 +51,7 @@ class BasePageController implements Controller
         ?>
 
         <!DOCTYPE html>
-        <html lang="en">
+        <html lang="<?php echo Localize::translate("locale", "en") ?>">
 
         <head>
             <?php HeadView::render($data); ?>

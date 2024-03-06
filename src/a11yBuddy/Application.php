@@ -32,6 +32,8 @@ class Application
     const VERSION = "0.0.1";
     const NAME = "a11yBuddy";
 
+    const DEVELOPER_MODE = true;
+
     private static ?Application $instance = null;
 
     private BasePageRenderer $basePageRenderer;
