@@ -34,9 +34,9 @@ class FooterView implements View
                     <?php echo Application::NAME . " - " . Application::VERSION; ?>
                 </p>
             </div>
-            <script src="template/dependencies/jquery/jquery-3.5.1.min.js"></script>
-            <script src="template/dependencies/bootstrap/js/bootstrap.min.js"></script>
         </footer>
+
+        <script src="template/dependencies/bootstrap/js/bootstrap.bundle.min.js"></script>
         <?php
     }
 

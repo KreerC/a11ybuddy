@@ -41,7 +41,7 @@ class BasePageRenderer
 
     public function render(): void
     {
-        $this->pageController->render();
+        $this->pageController->run();
     }
 
     /**
@@ -56,7 +56,7 @@ class BasePageRenderer
         $this->router->addRoute("GET", "/", [HomepageView::class, "render"]);
 
         $this->router->addRoute("GET", "/create", [CreateProjectView::class, "render"]);
-        $this->router->addRoute("POST", "/create", [CreateProjectController::class, "handleData"]);
+        $this->router->addRoute("POST", "/create", [CreateProjectController::class, "run"]);
     }
 
     /**

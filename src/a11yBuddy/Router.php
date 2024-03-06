@@ -27,6 +27,16 @@ class Router
         "DELETE" => []
     ];
 
+    private static string $requestUri = "/";
+    private static string $requestMethod = "GET";
+
+    public function __construct()
+    {
+        $uri = $_SERVER["REQUEST_URI"] ?? "/";
+        self::$requestUri = explode("?", $uri)[0];
+        self::$requestMethod = $_SERVER["REQUEST_METHOD"] ?? "GET";
+    }
+
     /**
      * Register a new route.
      * 
@@ -103,4 +113,21 @@ class Router
         $pattern = '/^' . $pattern . '$/';
         return $pattern;
     }
+
+    /**
+     * @return string The current request URI.
+     */
+    public static function getRequestUri(): string
+    {
+        return self::$requestUri;
+    }
+
+    /**
+     * @return string The current request method.
+     */
+    public static function getRequestMethod(): string
+    {
+        return self::$requestMethod;
+    }
+
 }

@@ -20,6 +20,7 @@ namespace A11yBuddy\Frontend\BasePage;
 
 use A11yBuddy\Application;
 use A11yBuddy\Frontend\View;
+use A11yBuddy\Router;
 
 class NavigationView implements View
 {
@@ -33,22 +34,37 @@ class NavigationView implements View
                     <?php echo Application::NAME; ?>
                 </a>
 
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="/discover">Discover</a>
+                            <a class="nav-link<?php echo Router::getRequestUri() === "/discover" ? ' active " aria-current="page' : '' ?>"
+                                href="/discover">Discover</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/create">Create new project</a>
+                            <a class="nav-link<?php echo Router::getRequestUri() === "/create" ? ' active " aria-current="page' : '' ?>"
+                                href="/create">Create new project</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/my-projects">My projects</a>
+                            <a class="nav-link<?php echo Router::getRequestUri() === "/my-projects" ? ' active " aria-current="page' : '' ?>"
+                                href="/my-projects">My projects</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Account
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/login">Log In</a></li>
+                                <li><a class="dropdown-item" href="/signup">Register</a></li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
-
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"></button>
             </div>
         </nav>
         <?php

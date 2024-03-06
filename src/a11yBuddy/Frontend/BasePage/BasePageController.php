@@ -19,13 +19,15 @@
 namespace A11yBuddy\Frontend\BasePage;
 
 use A11yBuddy\Frontend\BasePageRenderer;
+use A11yBuddy\Frontend\Controller;
+use A11yBuddy\Router;
 
 /**
  * Class PageStructure
  * 
  * Renders the basic structure of a page and handles routing for the main content
  */
-class BasePageController
+class BasePageController implements Controller
 {
 
     private BasePageRenderer $renderer;
@@ -43,17 +45,7 @@ class BasePageController
         return $this->renderer;
     }
 
-    public function doRouting()
-    {
-        $uri = $_SERVER["REQUEST_URI"] ?? "/";
-        $requestType = $_SERVER["REQUEST_METHOD"] ?? "GET";
-
-        $uri = explode("?", $uri)[0];
-
-        $this->getRenderer()->getRouter()->handleRequest($requestType, $uri);
-    }
-
-    public function render(array $data = [])
+    public function run(array $data = [])
     {
         ?>
 
@@ -70,7 +62,8 @@ class BasePageController
             <main>
                 <div class="container mt-3">
                     <?php
-                    $this->doRouting();
+                    $router = $this->getRenderer()->getRouter();
+                    $router->handleRequest(Router::getRequestMethod(), Router::getRequestUri());
                     ?>
                 </div>
             </main>
