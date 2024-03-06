@@ -29,12 +29,23 @@ class Localize
 
     private array $translations = [];
 
-    public function __construct(string $defaultLocale = 'en')
+    public function __construct(string $defaultLocale = 'en', string|bool $localeIni = false)
     {
         self::$instance = $this;
 
+        // For testing purposes, we can pass a custom string
+        if ($localeIni) {
+            $result = parse_ini_string($localeIni);
+            if ($result === false) {
+                throw new \Exception("Failed to load locale definitions from string");
+            }
+            $this->locale = $defaultLocale;
+            $this->translations = $result;
+            return;
+        }
+
         // Parse the locale from the user's browser
-        $this->locale = strtolower($_SERVER['HTTP_ACCEPT_LANGUAGE']);
+        $this->locale = strtolower($_SERVER['HTTP_ACCEPT_LANGUAGE']) ?? $defaultLocale;
         $this->locale = basename(explode('-', $this->locale)[0]);
 
         // Check if the locale is supported
@@ -66,11 +77,6 @@ class Localize
 
         if ($translation === '') {
             $translation = $default;
-
-            // Make it easy for developers to spot missing translations
-            if (Application::DEVELOPER_MODE) {
-                $translation = '<span title="No translation provided" style="color: red; border: 5px red solid;">' . $translation . "</span>";
-            }
         }
 
         // If there are variables, replace them in the string
