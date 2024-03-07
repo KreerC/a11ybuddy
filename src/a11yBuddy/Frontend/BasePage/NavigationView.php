@@ -32,7 +32,7 @@ class NavigationView implements View
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="/">
-                    <?php echo Application::NAME; ?>
+                    <?php echo Application::getInstance()->getConfig()["app"]["name"]; ?>
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"

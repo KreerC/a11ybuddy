@@ -36,9 +36,15 @@ class Application
 
     private BasePageRenderer $basePageRenderer;
 
-    public function __construct()
+    /**
+     * @var array The configuration of the application. An example is in config.example.php.
+     */
+    private array $config;
+
+    public function __construct(array $config = [])
     {
         self::$instance = $this;
+        $this->config = $config;
 
         $this->basePageRenderer = new BasePageRenderer();
     }
@@ -62,6 +68,14 @@ class Application
             self::$instance = new Application();
         }
         return self::$instance;
+    }
+
+    /**
+     * @return array The configuration of the application.
+     */
+    public function getConfig(): array
+    {
+        return $this->config;
     }
 
 }
