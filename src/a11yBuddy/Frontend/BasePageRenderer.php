@@ -18,6 +18,7 @@
 
 namespace A11yBuddy\Frontend;
 
+use A11yBuddy\Application;
 use A11yBuddy\Frontend\BasePage\BasePageController;
 use A11yBuddy\Frontend\CreateProject\CreateProjectController;
 use A11yBuddy\Frontend\CreateProject\CreateProjectView;
@@ -57,6 +58,12 @@ class BasePageRenderer
 
         $this->router->addRoute("GET", "/create", [CreateProjectView::class, "render"]);
         $this->router->addRoute("POST", "/create", [CreateProjectController::class, "run"]);
+
+        // Register custom pages
+        $customPages = Application::getInstance()->getConfig()["custom_pages"] ?? [];
+        foreach ($customPages as $route => $page) {
+            $this->router->addRoute("GET", $route, [CustomPageController::class, "run"]);
+        }
     }
 
     /**

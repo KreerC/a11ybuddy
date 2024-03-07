@@ -18,5 +18,25 @@ return [
     'app' => [
         'url' => 'http://localhost',
         'name' => 'a11yBuddy'
+    ],
+    'languages' => [
+        'en' => 'English',
+        'de' => 'Deutsch'
+    ],
+    'custom_pages' => [
+        '/example' => [
+            'files' => [
+                'en' => 'pages/example.md',
+                'de' => 'pages/example.de.md'
+            ],
+            'type' => 'markdown'
+        ],
+    ],
+    'footer' => [
+        "links" => [
+            "en" => [
+                "/example" => "Example custom page",
+            ]
+        ]
     ]
 ];

@@ -26,6 +26,7 @@ class NotFoundView implements View
 
     public static function render(array $data = [])
     {
+        http_response_code(404);
         ?>
         <h1>
             <?php echo Localize::translate("not_found", "Page Not Found"); ?>
