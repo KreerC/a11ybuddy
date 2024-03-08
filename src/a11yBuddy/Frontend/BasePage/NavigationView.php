@@ -36,7 +36,8 @@ class NavigationView implements View
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    aria-controls="navbarNav" aria-expanded="false"
+                    aria-label="<?php echo Localize::translate("toggle_navigation", "Toggle Navigation") ?>">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
