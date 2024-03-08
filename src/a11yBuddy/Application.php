@@ -18,6 +18,7 @@
 
 namespace A11yBuddy;
 
+use A11yBuddy\Database\Database;
 use A11yBuddy\Frontend\BasePageRenderer;
 
 /**
@@ -34,6 +35,8 @@ class Application
 
     private static ?Application $instance = null;
 
+    private Database $database;
+
     private BasePageRenderer $basePageRenderer;
 
     /**
@@ -46,15 +49,8 @@ class Application
         self::$instance = $this;
         $this->config = $config;
 
+        $this->database = new Database($config['db']);
         $this->basePageRenderer = new BasePageRenderer();
-    }
-
-    /**
-     * @return BasePageRenderer
-     */
-    public function getBasePageRenderer(): BasePageRenderer
-    {
-        return $this->basePageRenderer;
     }
 
     /**
@@ -68,6 +64,22 @@ class Application
             self::$instance = new Application();
         }
         return self::$instance;
+    }
+
+    /**
+     * @return BasePageRenderer
+     */
+    public function getBasePageRenderer(): BasePageRenderer
+    {
+        return $this->basePageRenderer;
+    }
+
+    /**
+     * @return Database
+     */
+    public function getDatabase(): Database
+    {
+        return $this->database;
     }
 
     /**
