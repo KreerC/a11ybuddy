@@ -62,7 +62,11 @@ class BasePageRenderer
         // Register custom pages
         $customPages = Application::getInstance()->getConfig()["custom_pages"] ?? [];
         foreach ($customPages as $route => $page) {
-            $this->router->addRoute("GET", $route, [CustomPageController::class, "run"]);
+            /*
+             * TODO: We allow the user to override previously defined routes if they want to supply their own custom landing page.
+             * This might result in errors if the admin is not careful, so in the future this should be handled differently.
+             */
+            $this->router->addRoute("GET", $route, [CustomPageController::class, "run"], true);
         }
     }
 
