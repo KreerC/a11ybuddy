@@ -113,4 +113,30 @@ class User
         return false;
     }
 
+    /**
+     * Returns the status of the user.
+     * 
+     * @return UserStatus The status of the user. Defaults to Unverified if the status is invalid.
+     */
+    public function getStatus(): UserStatus
+    {
+        $status = UserStatus::tryFrom($this->status);
+
+        if ($status === null) {
+            return UserStatus::Unverified;
+        }
+
+        return $status;
+    }
+
+    /** 
+     * Sets the status of the user.
+     * 
+     * @param UserStatus $status The new status of the user.
+     */
+    public function setStatus(UserStatus $status)
+    {
+        $this->status = $status->value;
+    }
+
 }

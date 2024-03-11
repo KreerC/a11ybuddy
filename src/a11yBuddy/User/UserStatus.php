@@ -18,31 +18,31 @@
 
 namespace A11yBuddy\User;
 
-class UserStatus
+enum UserStatus: int
 {
 
     /**
      * The user has not verified their account yet, e.g. using an email address.
      */
-    const UNVERIFIED = 0;
+    case Unverified = 0;
 
     /**
      * The user has verified their account. The account is fully functional.
      */
-    const VERIFIED = 1;
+    case Verified = 1;
 
     /**
      * The user's account has been suspended. They cannot log in or use the application.
      */
-    const SUSPENDED = 2;
+    case Suspended = 2;
 
 
-    const DELETED = 3;
+    case Deleted = 3;
 
     /**
      * The user has elevated privileges, e.g. they are an administrator.
      */
-    const PRIVILEGED = 10;
+    case Privileged = 4;
 
 
 }
