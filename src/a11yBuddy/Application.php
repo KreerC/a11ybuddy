@@ -4,6 +4,7 @@ namespace A11yBuddy;
 
 use A11yBuddy\Database\Database;
 use A11yBuddy\Frontend\BasePageRenderer;
+use A11yBuddy\User\SessionManager;
 
 /**
  * The starting point of the application.
@@ -19,24 +20,6 @@ class Application
 
     private static ?Application $instance = null;
 
-    private Database $database;
-
-    private BasePageRenderer $basePageRenderer;
-
-    /**
-     * @var array The configuration of the application. An example is in config.example.php.
-     */
-    private array $config;
-
-    public function __construct(array $config = [])
-    {
-        self::$instance = $this;
-        $this->config = $config;
-
-        $this->database = new Database($config['db']);
-        $this->basePageRenderer = new BasePageRenderer();
-    }
-
     /**
      * Singleton method to get the current instance of the Application.
      * 
@@ -50,6 +33,36 @@ class Application
         return self::$instance;
     }
 
+
+    private Database $database;
+
+    private BasePageRenderer $basePageRenderer;
+
+    private SessionManager $sessionManager;
+
+    /**
+     * @var array The configuration of the application. An example is in config.example.php.
+     */
+    private array $config;
+
+    public function __construct(array $config = [])
+    {
+        self::$instance = $this;
+        $this->config = $config;
+
+        $this->database = new Database($config['db']);
+        $this->sessionManager = new SessionManager();
+        $this->basePageRenderer = new BasePageRenderer();
+    }
+
+    /**
+     * @return Database
+     */
+    public function getDatabase(): Database
+    {
+        return $this->database;
+    }
+
     /**
      * @return BasePageRenderer
      */
@@ -59,11 +72,11 @@ class Application
     }
 
     /**
-     * @return Database
+     * @return SessionManager
      */
-    public function getDatabase(): Database
+    public function getSessionManager(): SessionManager
     {
-        return $this->database;
+        return $this->sessionManager;
     }
 
     /**

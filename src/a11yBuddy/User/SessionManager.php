@@ -8,6 +8,30 @@ class SessionManager
     public function __construct()
     {
         session_start();
+
+        $this->renewSessionIdPeriodically();
+    }
+
+    /**
+     * Renews the session ID and updates the session start time.
+     */
+    public function renewSessionId(): void
+    {
+        session_regenerate_id(true);
+        $_SESSION['started'] = time();
+    }
+
+    /**
+     * Security: Renews the session ID periodically for logged in users.
+     * This behaviour is set to run every 15 minutes.
+     */
+    private function renewSessionIdPeriodically(): void
+    {
+        if ($this->isLoggedIn()) {
+            if (isset($_SESSION['started']) && $_SESSION['started'] < time() - 60 * 15) {
+                $this->renewSessionId();
+            }
+        }
     }
 
     /**
