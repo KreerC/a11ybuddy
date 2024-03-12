@@ -5,6 +5,10 @@ namespace A11yBuddy\Frontend\BasePage;
 use A11yBuddy\Frontend\Localize;
 use A11yBuddy\Frontend\View;
 
+/**
+ * The default view that can be used for when something does not exist.
+ * Sends a 404 response code automatically.
+ */
 class NotFoundView implements View
 {
 

@@ -2,6 +2,10 @@
 
 namespace A11yBuddy\User;
 
+/**
+ * A model of the user that can interact with the database.
+ * Has all the properties and methods needed to interact with Users.
+ */
 class User
 {
 

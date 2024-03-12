@@ -2,6 +2,9 @@
 
 namespace A11yBuddy\User;
 
+/**
+ * Manages the user's session and provides methods for handling/checking the user's login status.
+ */
 class SessionManager
 {
 

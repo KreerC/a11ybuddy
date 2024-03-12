@@ -2,6 +2,9 @@
 
 namespace A11yBuddy\Database;
 
+/**
+ * A helper to interact with the Database of the application
+ */
 class Database
 {
 

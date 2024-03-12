@@ -2,6 +2,10 @@
 
 namespace A11yBuddy\User;
 
+/**
+ * User accounts can have different statuses, e.g. verified, unverified, suspended, etc.
+ * This enum represents these different statuses.
+ */
 enum UserStatus: int
 {
 

@@ -7,6 +7,9 @@ use A11yBuddy\Frontend\Localize;
 use A11yBuddy\Frontend\View;
 use A11yBuddy\Router;
 
+/**
+ * Renders the topmost navbar
+ */
 class NavigationView implements View
 {
 

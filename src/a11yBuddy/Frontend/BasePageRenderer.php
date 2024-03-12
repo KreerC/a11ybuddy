@@ -10,6 +10,9 @@ use A11yBuddy\Frontend\BasePage\HomepageView;
 use A11yBuddy\Frontend\BasePage\NotFoundView;
 use A11yBuddy\Router;
 
+/**
+ * Handles the registration of routes and initiates the rendering of the page
+ */
 class BasePageRenderer
 {
 

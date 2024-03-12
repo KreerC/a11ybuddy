@@ -4,6 +4,9 @@ namespace A11yBuddy\Frontend;
 
 use A11yBuddy\Application;
 
+/**
+ * Localization utilities for the frontend
+ */
 class Localize
 {
 

@@ -5,6 +5,9 @@ namespace A11yBuddy\Frontend\BasePage;
 use A11yBuddy\Application;
 use A11yBuddy\Frontend\View;
 
+/**
+ * Defines all meta information in the pages' <head> tag
+ */
 class HeadView implements View
 {
 
@@ -12,7 +15,7 @@ class HeadView implements View
     {
         ?>
         <title>
-            <?php echo Application::NAME; ?>
+            <?php echo Application::NAME; // TODO needs to change dynamically to what the current page is    ?>
         </title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">

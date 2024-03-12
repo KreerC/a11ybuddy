@@ -51,7 +51,9 @@ class BasePageController implements Controller
                 </div>
             </main>
 
-            <?php FooterView::render($data); ?>
+            <footer class="mt-5">
+                <?php FooterView::render($data); ?>
+            </footer>
         </body>
 
         </html>

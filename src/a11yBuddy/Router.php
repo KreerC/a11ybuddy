@@ -2,6 +2,9 @@
 
 namespace A11yBuddy;
 
+/**
+ * Responsible for routing frontend user requests to the correct A11yBuddy\Frontend\Controller.
+ */
 class Router
 {
 
