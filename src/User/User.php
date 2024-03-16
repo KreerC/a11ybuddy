@@ -17,7 +17,7 @@ class User
      */
     public static function getByEmail(string $email): ?User
     {
-
+        return null;
     }
 
     /**
@@ -28,7 +28,7 @@ class User
      */
     public static function getById(int $id): ?User
     {
-
+        return null;
     }
 
     /**
