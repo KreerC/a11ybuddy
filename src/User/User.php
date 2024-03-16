@@ -102,8 +102,6 @@ class User
     }
 
     /**
-     * Returns the status of the user.
-     * 
      * @return UserStatus The status of the user. Defaults to Unverified if the status is invalid.
      */
     public function getStatus(): UserStatus
@@ -138,18 +136,26 @@ class User
     }
 
     /**
-     * Sets the display name of the user.
+     * Sets the display name of the user. Does validation (duplicate check, length check)
      * 
      * @param string $displayName The new display name of the user.
+     * @return bool True if the display name was set successfully, false if a user with the same display name already exists.
      */
-    public function setDisplayName(string $displayName): void
+    public function setDisplayName(string $displayName): bool
     {
+        if (strlen($displayName) < 3 || strlen($displayName) > 50) {
+            return false;
+        }
+
+        if (User::getByEmail($displayName) !== null) {
+            return false;
+        }
+
         $this->displayName = $displayName;
+        return true;
     }
 
     /**
-     * Returns the email address of the user.
-     * 
      * @return string The email address of the user.
      */
     public function getEmail(): string
@@ -158,18 +164,27 @@ class User
     }
 
     /**
-     * Sets the email address of the user.
+     * Sets the email address of the user. Does validation (duplicate check, format check)
+     * When updating the value, make sure to re-verify the email address and to change the users' status to Unverified.
      * 
      * @param string $email The new email address of the user.
+     * @return bool True if the email address was set successfully, false otherwise.
      */
-    public function setEmail(string $email): void
+    public function setEmail(string $email): bool
     {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return false;
+        }
+
+        if (User::getByEmail($email) !== null) {
+            return false;
+        }
+
         $this->email = $email;
+        return true;
     }
 
     /**
-     * Returns the password hash of the user.
-     * 
      * @return string The password hash of the user.
      */
     public function getPasswordHash(): string
@@ -181,10 +196,19 @@ class User
      * Sets the password of the user. Will perform the hashing.
      * 
      * @param string $password The new password of the user. 
+     * @param bool $validate Whether to run validation on the password.
+     * @return bool True if the password has passed validation and has been set, false otherwise.
      */
-    public function setPassword(string $password): void
+    public function setPassword(string $password, bool $validate = true): bool
     {
+        if ($validate) {
+            if (strlen($password) < 8) {
+                return false;
+            }
+        }
+
         $this->passwordHash = password_hash($password, PASSWORD_DEFAULT);
+        return true;
     }
 
     /**

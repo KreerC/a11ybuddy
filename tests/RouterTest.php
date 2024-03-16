@@ -6,7 +6,7 @@ use A11yBuddy\Router;
 class RouterTest extends TestCase
 {
 
-    public function testAddRoute()
+    public function testAddRoute(): void
     {
         $router = new Router();
 
@@ -26,7 +26,7 @@ class RouterTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testRegularNoPlaceholderRoute()
+    public function testRegularNoPlaceholderRoute(): void
     {
         $router = new Router();
 
@@ -46,7 +46,7 @@ class RouterTest extends TestCase
         $router->handleRequest("POST", $route);
     }
 
-    public function testSinglePlaceholderRoute()
+    public function testSinglePlaceholderRoute(): void
     {
         $router = new Router();
 
@@ -62,7 +62,7 @@ class RouterTest extends TestCase
         $this->assertEquals("User 123", $result);
     }
 
-    public function testMultiplePlaceholderRoute()
+    public function testMultiplePlaceholderRoute(): void
     {
         $router = new Router();
 
@@ -78,7 +78,7 @@ class RouterTest extends TestCase
         $this->assertEquals("User 123, Test 456", $result);
     }
 
-    public function testSingleUnexpectedToken()
+    public function testSingleUnexpectedToken(): void
     {
         $router = new Router();
 
@@ -93,7 +93,7 @@ class RouterTest extends TestCase
         $result = $router->handleRequest("GET", '/user/123$');
     }
 
-    public function testMultipleUnexpectedTokens()
+    public function testMultipleUnexpectedTokens(): void
     {
         $router = new Router();
 

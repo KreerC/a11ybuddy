@@ -10,8 +10,6 @@ class SessionManager
 
     public function __construct()
     {
-        session_start();
-
         $this->renewSessionIdPeriodically();
     }
 

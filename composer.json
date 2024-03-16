@@ -20,8 +20,12 @@
             "cp -r vendor/twbs/bootstrap/dist/ template/dependencies/bootstrap/"
         ],
         "test": "./vendor/bin/phpunit tests",
-        "stan": "./vendor/bin/phpstan analyse src --level=8",
-        "stan-easy": "./vendor/bin/phpstan analyse src --level=5"
+        "stan": "./vendor/bin/phpstan analyse src tests --level=8",
+        "stan-easy": "./vendor/bin/phpstan analyse src tests --level=5",
+        "test-all": [
+            "composer run-script test",
+            "composer run-script stan-easy"
+        ]
     },
     "require": {
         "twbs/bootstrap": "5.3.*",

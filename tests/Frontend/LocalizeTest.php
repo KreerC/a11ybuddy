@@ -5,7 +5,7 @@ use A11yBuddy\Frontend\Localize;
 
 class LocalizeTest extends TestCase
 {
-    public function testTranslate()
+    public function testTranslate(): void
     {
         $localize = new Localize(
             "en",

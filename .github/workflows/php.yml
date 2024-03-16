@@ -1,4 +1,4 @@
-name: Unit Tests
+name: PHP Tests
 
 on:
   push:
@@ -40,4 +40,4 @@ jobs:
         run: ./vendor/bin/phpunit --bootstrap vendor/autoload.php tests
 
       - name: Run PHPStan
-        run: ./vendor/bin/phpstan analyse src --level=5
+        run: ./vendor/bin/phpstan analyse src tests --level=5

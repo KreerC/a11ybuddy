@@ -5,7 +5,7 @@ use A11yBuddy\Application;
 
 class ApplicationTest extends TestCase
 {
-    public function testInstanceIsSingleton()
+    public function testInstanceIsSingleton(): void
     {
         $instance1 = Application::getInstance();
         $instance2 = Application::getInstance();

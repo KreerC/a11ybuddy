@@ -4,6 +4,7 @@
 // When you are hosting this application publicly, please consider writing a better index.php file
 // that includes proper error handling and security measures.
 
+session_start();
 require_once("vendor/autoload.php");
 
 use A11yBuddy\Application;
