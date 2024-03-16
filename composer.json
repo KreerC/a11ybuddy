@@ -21,7 +21,7 @@
         ],
         "test": "./vendor/bin/phpunit tests",
         "stan": "./vendor/bin/phpstan analyse src --level=8",
-        "stan-easy": "./vendor/bin/phpstan analyse src --level=3"
+        "stan-easy": "./vendor/bin/phpstan analyse src --level=5"
     },
     "require": {
         "twbs/bootstrap": "5.3.*",

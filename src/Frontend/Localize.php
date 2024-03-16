@@ -32,7 +32,7 @@ class Localize
         }
 
         // Parse the locale from the user's browser
-        $this->locale = strtolower($_SERVER['HTTP_ACCEPT_LANGUAGE']) ?? $defaultLocale;
+        $this->locale = strtolower($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? $defaultLocale);
         $this->locale = basename(explode('-', $this->locale)[0]);
 
         // Check if the locale is supported

@@ -127,4 +127,76 @@ class User
         $this->status = $status->value;
     }
 
+    /**
+     * Returns the display name of the user.
+     * 
+     * @return string The display name of the user.
+     */
+    public function getDisplayName(): string
+    {
+        return $this->displayName;
+    }
+
+    /**
+     * Sets the display name of the user.
+     * 
+     * @param string $displayName The new display name of the user.
+     */
+    public function setDisplayName(string $displayName): void
+    {
+        $this->displayName = $displayName;
+    }
+
+    /**
+     * Returns the email address of the user.
+     * 
+     * @return string The email address of the user.
+     */
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    /**
+     * Sets the email address of the user.
+     * 
+     * @param string $email The new email address of the user.
+     */
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * Returns the password hash of the user.
+     * 
+     * @return string The password hash of the user.
+     */
+    public function getPasswordHash(): string
+    {
+        return $this->passwordHash;
+    }
+
+    /**
+     * Sets the password of the user. Will perform the hashing.
+     * 
+     * @param string $password The new password of the user. 
+     */
+    public function setPassword(string $password): void
+    {
+        $this->passwordHash = password_hash($password, PASSWORD_DEFAULT);
+    }
+
+    /**
+     * Checks if the given password is correct.
+     * 
+     * @param string $password The password to check.
+     * @return bool True if the password is correct, false otherwise.
+     */
+    public function checkPassword(string $password): bool
+    {
+        return password_verify($password, $this->passwordHash);
+    }
+
+
 }
