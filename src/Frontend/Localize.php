@@ -36,12 +36,12 @@ class Localize
         $this->locale = basename(explode('-', $this->locale)[0]);
 
         // Check if the locale is supported
-        if (!file_exists(__DIR__ . "/../../../locale/{$this->locale}.ini")) {
+        if (!file_exists(__DIR__ . "/../../locale/{$this->locale}.ini")) {
             $this->locale = $defaultLocale;
         }
 
         // Load the corresponding language file
-        $result = parse_ini_file(__DIR__ . "/../../../locale/{$this->locale}.ini");
+        $result = parse_ini_file(__DIR__ . "/../../locale/{$this->locale}.ini");
 
         if ($result === false) {
             throw new \Exception("Failed to load language file for locale '{$this->locale}'");
