@@ -1,4 +1,4 @@
-name: PHP Composer
+name: Unit Tests
 
 on:
   push:
@@ -37,4 +37,4 @@ jobs:
         run: composer install --prefer-dist --no-progress
 
       - name: Run test suite
-        run: composer run-script test
+        run: ./vendor/bin/phpunit --bootstrap vendor/autoload.php tests

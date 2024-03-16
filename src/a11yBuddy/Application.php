@@ -50,7 +50,12 @@ class Application
         self::$instance = $this;
         $this->config = $config;
 
-        $this->database = new Database($config['db']);
+        if (isset($config["db"])) {
+            $this->database = new Database($config['db']);
+        } else {
+            // There are some default values, e.g. for testing.
+            $this->database = new Database();
+        }
         $this->sessionManager = new SessionManager();
         $this->basePageRenderer = new BasePageRenderer();
     }

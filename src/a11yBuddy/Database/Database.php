@@ -17,8 +17,14 @@ class Database
     /**
      * @param array $config The configuration for the database connection with the keys of host, dbname, username, and password
      */
-    public function __construct(array $config = [])
-    {
+    public function __construct(
+        array $config = [
+            "host" => "localhost",
+            "dbname" => "a11ybuddy",
+            "username" => "root",
+            "password" => ""
+        ]
+    ) {
         $this->config = $config;
     }
 
