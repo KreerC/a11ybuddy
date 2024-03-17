@@ -4,10 +4,10 @@ namespace A11yBuddy\Frontend;
 
 use A11yBuddy\Application;
 use A11yBuddy\Frontend\BasePage\BasePageController;
+use A11yBuddy\Frontend\BasePage\HomepageController;
+use A11yBuddy\Frontend\BasePage\NotFoundController;
 use A11yBuddy\Frontend\CreateProject\CreateProjectController;
 use A11yBuddy\Frontend\CreateProject\CreateProjectView;
-use A11yBuddy\Frontend\BasePage\HomepageView;
-use A11yBuddy\Frontend\BasePage\NotFoundView;
 use A11yBuddy\Router;
 
 /**
@@ -37,14 +37,11 @@ class BasePageRenderer
      */
     private function registerRoutes()
     {
-        // Add special routes
-        $this->router->addRoute("GET", "/404", [NotFoundView::class, "render"]);
-
         // All other routes
-        $this->router->addRoute("GET", "/", [HomepageView::class, "render"]);
+        $this->router->addRoute("GET", "/", HomepageController::class);
 
-        $this->router->addRoute("GET", "/create", [CreateProjectView::class, "render"]);
-        $this->router->addRoute("POST", "/create", [CreateProjectController::class, "run"]);
+        $this->router->addRoute("GET", "/create", CreateProjectController::class);
+        $this->router->addRoute("POST", "/create", CreateProjectController::class);
 
         // Register custom pages
         $customPages = Application::getInstance()->getConfig()["custom_pages"] ?? [];
@@ -53,7 +50,7 @@ class BasePageRenderer
              * TODO: We allow the user to override previously defined routes if they want to supply their own custom landing page.
              * This might result in errors if the admin is not careful, so in the future this should be handled differently.
              */
-            $this->router->addRoute("GET", $route, [CustomPageController::class, "run"], true);
+            $this->router->addRoute("GET", $route, CustomPageController::class, true);
         }
     }
 

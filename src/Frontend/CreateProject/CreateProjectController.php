@@ -2,19 +2,30 @@
 
 namespace A11yBuddy\Frontend\CreateProject;
 
+use A11yBuddy\Application;
 use A11yBuddy\Frontend\Controller;
 
-class CreateProjectController implements Controller
+class CreateProjectController extends Controller
 {
 
-    public function run(array $data = [])
+    public function getPageTitle(): string
+    {
+        return 'Create a new project';
+    }
+
+    public function run(array $data = []): void
     {
         // TODO
 
-        // Return the view with an error message for the time being
-        return CreateProjectView::render([
-            'error' => 'This feature is not yet implemented'
-        ]);
+        // Display the view with an error message for the time being
+        $view = new CreateProjectView();
+
+        $errors = [];
+        if (Application::getInstance()->getBasePageRenderer()->getRouter()->getRequestMethod() === 'POST') {
+            $errors["error"] = 'This feature is not yet implemented. Please try again later.';
+        }
+
+        $view->render($errors);
     }
 
 }

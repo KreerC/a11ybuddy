@@ -4,10 +4,10 @@ namespace A11yBuddy\Frontend\CreateProject;
 
 use A11yBuddy\Frontend\View;
 
-class CreateProjectView implements View
+class CreateProjectView extends View
 {
 
-    public static function render(array $data = [])
+    public function render(array $data = []): void
     {
 
         if (isset($data['error'])) {

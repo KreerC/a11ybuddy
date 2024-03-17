@@ -9,10 +9,10 @@ use A11yBuddy\Frontend\View;
 /**
  * Outputs the content of the <footer> tag
  */
-class FooterView implements View
+class FooterView extends View
 {
 
-    public static function render(array $data = [])
+    public function render(array $data = []): void
     {
         ?>
         <hr class="mb-3" aria-hidden="true">

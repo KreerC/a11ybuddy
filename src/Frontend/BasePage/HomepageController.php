@@ -4,14 +4,19 @@ namespace A11yBuddy\Frontend\BasePage;
 
 use A11yBuddy\Application;
 use A11yBuddy\Frontend\Localize;
-use A11yBuddy\Frontend\View;
+use A11yBuddy\Frontend\Controller;
 
-class HomepageView implements View
+class HomepageController extends Controller
 {
+
+    public function getPageTitle(): string
+    {
+        return Localize::translate("welcome", "Welcome to a11yBuddy");
+    }
 
     //TODO - we need a much better homepage with some actual content
 
-    public static function render(array $data = [])
+    public function run(array $data = []): void
     {
         ?>
         <h1>

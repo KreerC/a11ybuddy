@@ -8,14 +8,19 @@ use A11yBuddy\Frontend\View;
 /**
  * Defines all meta information in the pages' <head> tag
  */
-class HeadView implements View
+class HeadView extends View
 {
 
-    public static function render(array $data = [])
+    public function render(array $data = []): void
     {
+        if (!empty($data["title"]))
+            $title = $data['title'] . " - " . Application::getInstance()->getConfig()["app"]["name"];
+        else
+            $title = Application::getInstance()->getConfig()["app"]["name"];
+
         ?>
         <title>
-            <?php echo Application::NAME; // TODO needs to change dynamically to what the current page is    ?>
+            <?php echo $title; ?>
         </title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">

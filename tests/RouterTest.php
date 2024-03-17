@@ -1,5 +1,6 @@
 <?php
 
+use A11yBuddy\Frontend\BasePage\NotFoundController;
 use PHPUnit\Framework\TestCase;
 use A11yBuddy\Router;
 
@@ -35,15 +36,17 @@ class RouterTest extends TestCase
         $actualPattern = $router->buildPattern($route);
         $this->assertEquals($expectedPattern, $actualPattern);
 
-        $router->addRoute("GET", $route, function () {
-            return "Home route";
-        });
-        $result = $router->handleRequest("GET", $route);
-        $this->assertEquals("Home route", $result);
+        $function = function () {
+            return;
+        };
 
-        // Test whether there is an exception when the route is called as POST
-        $this->expectException(\Exception::class);
-        $router->handleRequest("POST", $route);
+        $router->addRoute("GET", $route, $function);
+        $result = $router->getControllerForRequest("GET", $route)[0];
+        $this->assertEquals($function, $result);
+
+        // Test whether there is a 404 error when the route does not exist
+        $result = $router->getControllerForRequest("POST", $route)[0];
+        $this->assertInstanceOf(NotFoundController::class, $result);
     }
 
     public function testSinglePlaceholderRoute(): void
@@ -58,7 +61,8 @@ class RouterTest extends TestCase
         $router->addRoute("POST", $route, function ($params) {
             return "User " . $params["id"];
         });
-        $result = $router->handleRequest("POST", '/user/123');
+        $result = $router->getControllerForRequest("POST", '/user/123');
+        $result = $result[0]($result[1]);
         $this->assertEquals("User 123", $result);
     }
 
@@ -74,7 +78,8 @@ class RouterTest extends TestCase
         $router->addRoute("GET", $route, function ($params) {
             return "User " . $params["id"] . ", Test " . $params["testId"];
         });
-        $result = $router->handleRequest("GET", '/user/123/tests/456');
+        $result = $router->getControllerForRequest("GET", '/user/123/tests/456');
+        $result = $result[0]($result[1]);
         $this->assertEquals("User 123, Test 456", $result);
     }
 
@@ -89,8 +94,8 @@ class RouterTest extends TestCase
         });
 
         // Test unexpected token in route
-        $this->expectException(\Exception::class);
-        $result = $router->handleRequest("GET", '/user/123$');
+        $result = $router->getControllerForRequest("GET", '/user/123$');
+        $this->assertInstanceOf(NotFoundController::class, $result[0]);
     }
 
     public function testMultipleUnexpectedTokens(): void
@@ -103,9 +108,8 @@ class RouterTest extends TestCase
             return "User " . $params["id"];
         });
 
-        // Test unexpected token in route with more special characters
-        $this->expectException(\Exception::class);
-        $result = $router->handleRequest("GET", '/user/!@#$%^&*()');
+        $result = $router->getControllerForRequest("GET", '/user/!@#$%^&*()');
+        $this->assertInstanceOf(NotFoundController::class, $result[0]);
     }
 
 }

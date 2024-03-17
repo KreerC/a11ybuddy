@@ -3,16 +3,21 @@
 namespace A11yBuddy\Frontend\BasePage;
 
 use A11yBuddy\Frontend\Localize;
-use A11yBuddy\Frontend\View;
+use A11yBuddy\Frontend\Controller;
 
 /**
- * The default view that can be used for when something does not exist.
+ * A controller that is invoked when something does not exist.
  * Sends a 404 response code automatically.
  */
-class NotFoundView implements View
+class NotFoundController extends Controller
 {
 
-    public static function render(array $data = [])
+    public function getPageTitle(): string
+    {
+        return Localize::translate("not_found", "Page Not Found");
+    }
+
+    public function run(array $data = []): void
     {
         http_response_code(404);
         ?>

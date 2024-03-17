@@ -2,6 +2,8 @@
 
 namespace A11yBuddy;
 
+use A11yBuddy\Frontend\BasePage\NotFoundController;
+
 /**
  * Responsible for routing frontend user requests to the correct A11yBuddy\Frontend\Controller.
  */
@@ -51,12 +53,12 @@ class Router
      * 
      * @param string $method The HTTP method of the route.
      * @param string $path The path of the route. You can use placeholders like {id}.
-     * @param callable|array $handler The handler for the route. Can be a function or a class method.
+     * @param string|callable $handler The handler for the route. Can be a class or a function.
      * @param bool $override Whether to override an existing route. False by default.
      * 
      * @return bool Whether the route was added successfully.
      */
-    public function addRoute(string $method, string $path, callable|array $handler, bool $override = false): bool
+    public function addRoute(string $method, string $path, string|callable $handler, bool $override = false): bool
     {
         if (!isset($this->routes[$method])) {
             return false;
@@ -71,13 +73,13 @@ class Router
     }
 
     /**
-     * Handle a request.
+     * Returns the corresponding controller for a given request.
      * 
      * @param string $method The HTTP method of the request.
      * @param string $requestPath The path of the request.
-     * @return mixed The result of the handler.
+     * @return array An array containing the controller and the matches from the route.
      */
-    public function handleRequest(string $method, string $requestPath)
+    public function getControllerForRequest(string $method, string $requestPath): array
     {
         foreach ($this->routes[$method] as $route => $handler) {
             $pattern = $this->buildPattern($route);
@@ -86,26 +88,24 @@ class Router
                 // Remove the full match
                 array_shift($matches);
 
-                // If the handler is an array, it's a class method
-                if (is_array($handler)) {
-                    $class = $handler[0];
-                    $method = $handler[1];
-                    return call_user_func_array([new $class, $method], $matches);
-                }
-
                 // If the handler is a callable, it's a function
                 if (is_callable($handler)) {
-                    return call_user_func($handler, $matches);
+                    return [$handler, $matches];
                 }
+
+                // If the handler is a class, it's a controller
+                if (class_exists($handler)) {
+                    return [new $handler(), $matches];
+                }
+
+
+
+                throw new \Exception("Handler for " . $requestPath . " is not a function or a class");
             }
         }
 
-        // Route to 404 if it exists
-        if (isset($this->routes["GET"]["/404"])) {
-            return call_user_func_array($this->routes["GET"]["/404"], []);
-        }
-
-        throw new \Exception("Route not found");
+        // Route to 404 if no route is found
+        return [new NotFoundController(), []];
     }
 
     /**

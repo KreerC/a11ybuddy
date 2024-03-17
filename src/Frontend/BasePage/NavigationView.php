@@ -10,10 +10,10 @@ use A11yBuddy\Router;
 /**
  * Renders the topmost navbar
  */
-class NavigationView implements View
+class NavigationView extends View
 {
 
-    public static function render(array $data = [])
+    public function render(array $data = []): void
     {
         ?>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">

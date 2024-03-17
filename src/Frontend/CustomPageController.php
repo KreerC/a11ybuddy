@@ -3,16 +3,22 @@
 namespace A11yBuddy\Frontend;
 
 use A11yBuddy\Application;
-use A11yBuddy\Frontend\BasePage\NotFoundView;
+use A11yBuddy\Frontend\BasePage\NotFoundController;
 use A11yBuddy\Router;
 
 /**
  * Displays the content of a custom page supplied by the user, e.g. an Imprint or Privacy Policy page.
  */
-class CustomPageController implements Controller
+class CustomPageController extends Controller
 {
 
-    public function run(array $data = [])
+    public function getPageTitle(): string
+    {
+        //TODO implement custom page names for custom pages
+        return "";
+    }
+
+    public function run(array $data = []): void
     {
         $customPages = Application::getInstance()->getConfig()["custom_pages"] ?? [];
         $route = Router::getRequestUri();
@@ -24,8 +30,7 @@ class CustomPageController implements Controller
             $file = $customPages[$route]["files"][$lang] ?? $customPages[$route]["files"]["en"];
 
             if (!file_exists($file)) {
-                NotFoundView::render();
-                return;
+                $this->notFound();
             }
 
             $fileContent = file_get_contents($file);
@@ -40,10 +45,18 @@ class CustomPageController implements Controller
             } else {
                 throw new \Exception("Unknown custom page type: " . $type);
             }
-
         } else {
-            NotFoundView::render();
+            $this->notFound();
         }
+    }
+
+    /**
+     * Displays a 404 error page if the custom page does not exist
+     */
+    private function notFound(): void
+    {
+        $notFoundController = new NotFoundController();
+        $notFoundController->run();
     }
 
 }

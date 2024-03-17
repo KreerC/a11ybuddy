@@ -10,14 +10,25 @@ use A11yBuddy\Router;
 /**
  * Renders the basic structure of a page and handles routing for the main content
  */
-class BasePageController implements Controller
+class BasePageController extends Controller
 {
 
     private BasePageRenderer $renderer;
 
+    private Router $router;
+
+    private mixed $subController;
+
+    private array $routeData = [];
+
     public function __construct(BasePageRenderer $renderer)
     {
         $this->renderer = $renderer;
+
+        $this->router = $this->getRenderer()->getRouter();
+        $sub = $this->router->getControllerForRequest(Router::getRequestMethod(), Router::getRequestUri());
+        $this->subController = $sub[0];
+        $this->routeData = $sub[1];
     }
 
     /**
@@ -28,31 +39,50 @@ class BasePageController implements Controller
         return $this->renderer;
     }
 
-    public function run(array $data = [])
+    public function run(array $data = []): void
     {
+
+        // Handle JSON
+        if ($this->subController instanceof Controller && $this->subController->getDisplayType() === "json") {
+            header("Content-Type: application/json");
+            $this->subController->run($this->routeData);
+            return;
+        }
+
         ?>
 
         <!DOCTYPE html>
         <html lang="<?php echo Localize::translate("locale", "en") ?>">
 
         <head>
-            <?php HeadView::render($data); ?>
+            <?php
+            $head = new HeadView();
+            $head->render(["title" => $this->subController instanceof Controller ? $this->subController->getPageTitle() : ""]);
+            ?>
         </head>
 
         <body>
-            <?php NavigationView::render($data); ?>
+            <?php
+            $nav = new NavigationView();
+            $nav->render([]);
+            ?>
 
             <main>
                 <div class="container mt-3">
                     <?php
-                    $router = $this->getRenderer()->getRouter();
-                    $router->handleRequest(Router::getRequestMethod(), Router::getRequestUri());
+                    if ($this->subController instanceof Controller) {
+                        $this->subController->run($this->routeData);
+                    } else if (is_callable($this->subController)) {
+                        $callable = $this->subController;
+                        $callable($this->routeData);
+                    }
                     ?>
                 </div>
             </main>
 
             <footer class="mt-5">
-                <?php FooterView::render($data); ?>
+                <?php $footer = new FooterView();
+                $footer->render([]); ?>
             </footer>
         </body>
 
