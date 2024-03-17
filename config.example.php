@@ -29,6 +29,10 @@ return [
                 'en' => 'pages/example.md',
                 'de' => 'pages/example.de.md'
             ],
+            'title' => [
+                'en' => 'Example custom page',
+                'de' => 'Beispielseite'
+            ],
             'type' => 'markdown'
         ],
     ],
