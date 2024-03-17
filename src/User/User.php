@@ -32,6 +32,17 @@ class User
     }
 
     /**
+     * Gets a user object by their username.
+     * 
+     * @param string $username The username of the user to get.
+     * @return User|null The user object, or null if the user does not exist.
+     */
+    public static function getByUsername(string $username): ?User
+    {
+        return null;
+    }
+
+    /**
      * Gets the currently logged in user object.
      * 
      * @return User|null The currently logged in user object, or null if no user is logged in.
@@ -46,8 +57,9 @@ class User
     }
 
 
-    private null|int $id;
+    private ?int $id;
     private string $displayName;
+    private string $username;
     private string $email;
     private string $passwordHash;
 
@@ -58,6 +70,7 @@ class User
      * 
      * @param array $dbRow The database row to create the user from. This should be an associative array with the following keys:
      * - display_name: The display name of the user.
+     * - username: The username of the user.
      * - email: The email address of the user.
      * - password_hash: The password hash of the user.
      * - status: The status of the user.
@@ -65,11 +78,12 @@ class User
      */
     public function __construct(array $dbRow)
     {
-        $this->displayName = $dbRow['display_name'];
-        $this->email = $dbRow['email'];
-        $this->passwordHash = $dbRow['password_hash'];
+        $this->displayName = $dbRow['display_name'] ?? '';
+        $this->username = $dbRow['username'] ?? '';
+        $this->email = $dbRow['email'] ?? '';
+        $this->passwordHash = $dbRow['password_hash'] ?? '';
 
-        $this->status = $dbRow['status'];
+        $this->status = $dbRow['status'] ?? UserStatus::Unverified->value;
 
         $this->id = $dbRow['id'] ?? null;
     }
@@ -136,7 +150,7 @@ class User
     }
 
     /**
-     * Sets the display name of the user. Does validation (duplicate check, length check)
+     * Sets the display name of the user. Does validation (length check)
      * 
      * @param string $displayName The new display name of the user.
      * @return bool True if the display name was set successfully, false if a user with the same display name already exists.
@@ -147,11 +161,39 @@ class User
             return false;
         }
 
-        if (User::getByEmail($displayName) !== null) {
+        $this->displayName = $displayName;
+        return true;
+    }
+
+    /**
+     * @return string The username of the user.
+     */
+    public function getUsername(): string
+    {
+        return $this->username;
+    }
+
+    /**
+     * Sets the username of the user. Does validation (duplicate check, length check)
+     * 
+     * @param string $username The new username of the user.
+     * @return bool True if the username was set successfully, false if a user with the same username already exists.
+     */
+    public function setUsername(string $username): bool
+    {
+        if (strlen($username) < 3 || strlen($username) > 20) {
             return false;
         }
 
-        $this->displayName = $displayName;
+        if (strlen($username) !== strspn($username, 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_')) {
+            return false;
+        }
+
+        if (User::getByUsername($username) !== null) {
+            return false;
+        }
+
+        $this->username = $username;
         return true;
     }
 

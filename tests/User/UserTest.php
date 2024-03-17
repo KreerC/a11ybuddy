@@ -9,6 +9,7 @@ class UserTest extends TestCase
     {
         $user = new User([
             "display_name" => "John Doe",
+            "username" => "john_doe",
             "email" => "john@doe.invalid",
             "password_hash" => "",
             "status" => 0
@@ -32,6 +33,7 @@ class UserTest extends TestCase
     {
         $user = new User([
             "display_name" => "John Doe",
+            "username" => "john_doe",
             "email" => "john@doe.invalid",
             "password_hash" => "",
             "status" => 0
@@ -39,11 +41,35 @@ class UserTest extends TestCase
 
         // Test setting a valid email
         $this->assertTrue($user->setEmail('john2@doe.invalid'));
+        $this->assertEquals('john2@doe.invalid', $user->getEmail());
 
         // Test setting an invalid email
         $this->assertFalse($user->setEmail('invalid-email'));
+        $this->assertNotEquals('invalid-email', $user->getEmail());
+        $this->assertEquals('john2@doe.invalid', $user->getEmail());
 
         // TODO test whether duplicate checking works
     }
 
+    public function testSetUsername(): void
+    {
+        $user = new User([
+            "display_name" => "John Doe",
+            "username" => "john_doe",
+            "email" => "john@doe.invalid",
+            "password_hash" => "",
+            "status" => 0
+        ]);
+
+        // Test setting a valid username
+        $this->assertTrue($user->setUsername('john_doe2'));
+        $this->assertEquals('john_doe2', $user->getUsername());
+
+        // Test setting an invalid username
+        $this->assertFalse($user->setUsername('invalid-username'));
+        $this->assertNotEquals('invalid-username', $user->getUsername());
+        $this->assertEquals('john_doe2', $user->getUsername());
+
+        // TODO test whether duplicate checking works
+    }
 }
