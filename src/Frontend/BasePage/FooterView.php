@@ -35,7 +35,7 @@ class FooterView extends View
             </p>
         </div>
 
-        <script src="template/dependencies/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
         <?php
     }
 

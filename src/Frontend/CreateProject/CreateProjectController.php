@@ -22,7 +22,7 @@ class CreateProjectController extends Controller
 
         $errors = [];
         if (Application::getInstance()->getBasePageRenderer()->getRouter()->getRequestMethod() === 'POST') {
-            $errors["error"] = 'This feature is not yet implemented. Please try again later.';
+            $errors["warning_message"] = 'This feature is not yet implemented. Please try again later.';
         }
 
         $view->render($errors);

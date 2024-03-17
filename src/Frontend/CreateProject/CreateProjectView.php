@@ -2,6 +2,7 @@
 
 namespace A11yBuddy\Frontend\CreateProject;
 
+use A11yBuddy\Frontend\BasePage\ErrorView;
 use A11yBuddy\Frontend\View;
 
 class CreateProjectView extends View
@@ -9,14 +10,9 @@ class CreateProjectView extends View
 
     public function render(array $data = []): void
     {
-
-        if (isset($data['error'])) {
-            ?>
-            <div class="alert alert-danger" role="alert">
-                <?php echo $data['error']; ?>
-            </div>
-            <?php
-        }
+        // Show potential error messages
+        $errorView = new ErrorView();
+        $errorView->render($data);
 
         ?>
         <h1>Create a New Project</h1>

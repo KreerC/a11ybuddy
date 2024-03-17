@@ -24,7 +24,7 @@ class CustomPageController extends Controller
 
         $route = Router::getRequestUri();
         if (isset($customPages[$route])) {
-            $this->renderMode = $customPages[$route]["type"];
+            $this->renderMode = $customPages[$route]["type"] ?? "markdown";
             $lang = Localize::getInstance()->getLocale();
 
             // Check if a file for this language exists - otherwise use the default locale
