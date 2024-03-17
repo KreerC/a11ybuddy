@@ -2,8 +2,6 @@
 
 namespace A11yBuddy\Frontend;
 
-use SebastianBergmann\Type\VoidType;
-
 /**
  * Views are responsible for rendering the user interface.
  * They should not contain any application logic.
