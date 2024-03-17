@@ -56,15 +56,13 @@ class BasePageController extends Controller
 
         <head>
             <?php
-            $head = new HeadView();
-            $head->render(["title" => $this->subController instanceof Controller ? $this->subController->getPageTitle() : ""]);
+            HeadView::use(["title" => $this->subController instanceof Controller ? $this->subController->getPageTitle() : ""]);
             ?>
         </head>
 
         <body>
             <?php
-            $nav = new NavigationView();
-            $nav->render([]);
+            NavigationView::use([]);
             ?>
 
             <main>
@@ -81,8 +79,9 @@ class BasePageController extends Controller
             </main>
 
             <footer class="mt-5">
-                <?php $footer = new FooterView();
-                $footer->render([]); ?>
+                <?php
+                FooterView::use([]);
+                ?>
             </footer>
         </body>
 

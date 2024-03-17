@@ -10,9 +10,8 @@ class CreateProjectView extends View
 
     public function render(array $data = []): void
     {
-        // Show potential error messages
-        $errorView = new ErrorView();
-        $errorView->render($data);
+        // Show potential error messages first
+        ErrorView::use($data);
 
         ?>
         <h1>Create a New Project</h1>

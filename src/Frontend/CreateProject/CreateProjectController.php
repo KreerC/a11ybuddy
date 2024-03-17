@@ -18,14 +18,12 @@ class CreateProjectController extends Controller
         // TODO
 
         // Display the view with an error message for the time being
-        $view = new CreateProjectView();
-
         $errors = [];
         if (Application::getInstance()->getBasePageRenderer()->getRouter()->getRequestMethod() === 'POST') {
             $errors["warning_message"] = 'This feature is not yet implemented. Please try again later.';
         }
 
-        $view->render($errors);
+        CreateProjectView::use($errors);
     }
 
 }
