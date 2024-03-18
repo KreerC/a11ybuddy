@@ -52,7 +52,7 @@ class BasePageController extends Controller
         ?>
 
         <!DOCTYPE html>
-        <html data-bs-theme="<?= $_SESSION["colorMode"] ?? "light" ?>" lang="<?= Localize::translate("locale", "en") ?>">
+        <html lang="<?= Localize::translate("locale", "en") ?>">
 
         <head>
             <?php

@@ -1,4 +1,4 @@
 /vendor/
 .DS_Store
-/assets/
+/assets/bootstrap/
 /config.php
