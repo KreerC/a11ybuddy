@@ -16,7 +16,7 @@ class NavigationView extends View
     public function render(array $data = []): void
     {
         ?>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container">
                 <a class="navbar-brand" href="/">
                     <?php echo Application::getInstance()->getConfig()["app"]["name"]; ?>

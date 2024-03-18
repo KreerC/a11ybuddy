@@ -18,7 +18,7 @@ class FooterView extends View
         <hr class="mb-3" aria-hidden="true">
         <div class="container">
             <p class="text-center">
-                <?php echo Application::NAME . " - " . Application::VERSION; ?>
+                <?= Application::NAME . " - " . Application::VERSION; ?>
             </p>
             <p class="text-center">
                 <?php
@@ -26,12 +26,17 @@ class FooterView extends View
                 $links = Application::getInstance()->getConfig()["footer"]["links"];
                 $locale = Localize::getInstance()->getLocale();
 
-                if (isset($links[$locale])) {
+                if (isset ($links[$locale])) {
                     foreach ($links[$locale] as $link => $title) {
                         echo '<a href="' . $link . '">' . $title . '</a> ';
                     }
                 }
                 ?>
+            </p>
+            <p class="text-center">
+                <a href="/settings/switch-color-mode">
+                    Toggle dark mode (dev feature)
+                </a>
             </p>
         </div>
 
