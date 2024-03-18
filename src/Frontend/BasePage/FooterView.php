@@ -3,6 +3,7 @@
 namespace A11yBuddy\Frontend\BasePage;
 
 use A11yBuddy\Application;
+use A11yBuddy\Frontend\BasePage\Settings\SwitchColorModeView;
 use A11yBuddy\Frontend\Localize;
 use A11yBuddy\Frontend\View;
 
@@ -34,9 +35,7 @@ class FooterView extends View
                 ?>
             </p>
             <p class="text-center">
-                <a href="/settings/switch-color-mode">
-                    Toggle dark mode (dev feature)
-                </a>
+                <?php SwitchColorModeView::use(); ?>
             </p>
         </div>
 

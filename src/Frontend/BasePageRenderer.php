@@ -5,7 +5,6 @@ namespace A11yBuddy\Frontend;
 use A11yBuddy\Application;
 use A11yBuddy\Frontend\BasePage\BasePageController;
 use A11yBuddy\Frontend\BasePage\HomepageController;
-use A11yBuddy\Frontend\BasePage\Settings\SwitchColorModeController;
 use A11yBuddy\Frontend\CreateProject\CreateProjectController;
 use A11yBuddy\Router;
 
@@ -41,9 +40,6 @@ class BasePageRenderer
 
         $this->router->addRoute("GET", "/create", CreateProjectController::class);
         $this->router->addRoute("POST", "/create", CreateProjectController::class);
-
-        // Settings
-        $this->router->addRoute("GET", "/settings/switch-color-mode", SwitchColorModeController::class);
 
         // Register custom pages
         $customPages = Application::getInstance()->getConfig()["custom_pages"] ?? [];

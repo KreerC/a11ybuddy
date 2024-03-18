@@ -19,46 +19,42 @@ class NavigationView extends View
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container">
                 <a class="navbar-brand" href="/">
-                    <?php echo Application::getInstance()->getConfig()["app"]["name"]; ?>
+                    <?= Application::getInstance()->getConfig()["app"]["name"]; ?>
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false"
-                    aria-label="<?php echo Localize::translate("toggle_navigation", "Toggle Navigation") ?>">
+                    aria-label="<?= Localize::translate("toggle_navigation", "Toggle Navigation") ?>">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link<?php echo Router::getRequestUri() === "/discover" ? ' active " aria-current="page' : '' ?>"
-                                href="/discover">
-                                <?php echo Localize::translate("discover", "Discover") ?>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link<?php echo Router::getRequestUri() === "/create" ? ' active " aria-current="page' : '' ?>"
-                                href="/create">
-                                <?php echo Localize::translate("create", "Create new project") ?>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link<?php echo Router::getRequestUri() === "/my-projects" ? ' active " aria-current="page' : '' ?>"
-                                href="/my-projects">
-                                <?php echo Localize::translate("my_projects", "My projects") ?>
-                            </a>
-                        </li>
+                        <?php
+
+                        $nav = [
+                            "/discover" => "Discover",
+                            "/create" => "Create new project",
+                            "/my-projects" => "My projects",
+                        ];
+
+                        foreach ($nav as $route => $label) {
+                            $this->renderBasicNavigationItem($route, $label);
+                        }
+
+                        ?>
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                                <?php echo Localize::translate("account", "Account") ?>
+                                <?= Localize::translate("account", "Account") ?>
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="/login">
-                                        <?php echo Localize::translate("login", "Log In") ?>
+                                        <?= Localize::translate("login", "Log In") ?>
                                     </a></li>
                                 <li><a class="dropdown-item" href="/signup">
-                                        <?php echo Localize::translate("signup", "Sign Up") ?>
+                                        <?= Localize::translate("signup", "Sign Up") ?>
                                     </a></li>
                             </ul>
                         </li>
@@ -66,6 +62,18 @@ class NavigationView extends View
                 </div>
             </div>
         </nav>
+        <?php
+    }
+
+    private function renderBasicNavigationItem(string $route, string $label): void
+    {
+        ?>
+        <li class="nav-item">
+            <a class="nav-link<?= Router::getRequestUri() === $route ? ' active " aria-current="page' : '' ?>"
+                href="<?= $route ?>">
+                <?= Localize::translate(trim($route, "/"), $label) ?>
+            </a>
+        </li>
         <?php
     }
 
