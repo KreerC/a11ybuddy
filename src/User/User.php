@@ -2,6 +2,8 @@
 
 namespace A11yBuddy\User;
 
+use A11yBuddy\Application;
+
 /**
  * A model of the user that can interact with the database.
  * Has all the properties and methods needed to interact with Users.
@@ -17,7 +19,16 @@ class User
      */
     public static function getByEmail(string $email): ?User
     {
-        return null;
+        $db = Application::getInstance()->getDatabase();
+        $result = $db->query('SELECT * FROM users WHERE email = :email', [':email' => $email]);
+
+        $result = $result->fetch(\PDO::FETCH_ASSOC);
+
+        if ($result === false) {
+            return null;
+        }
+
+        return new User($result);
     }
 
     /**
@@ -28,7 +39,16 @@ class User
      */
     public static function getById(int $id): ?User
     {
-        return null;
+        $db = Application::getInstance()->getDatabase();
+        $result = $db->query('SELECT * FROM users WHERE id = :id', [':id' => $id]);
+
+        $result = $result->fetch(\PDO::FETCH_ASSOC);
+
+        if ($result === false) {
+            return null;
+        }
+
+        return new User($result);
     }
 
     /**
@@ -39,7 +59,16 @@ class User
      */
     public static function getByUsername(string $username): ?User
     {
-        return null;
+        $db = Application::getInstance()->getDatabase();
+        $result = $db->query('SELECT * FROM users WHERE username = :username', [':username' => $username]);
+
+        $result = $result->fetch(\PDO::FETCH_ASSOC);
+
+        if ($result === false) {
+            return null;
+        }
+
+        return new User($result);
     }
 
     /**
@@ -49,7 +78,7 @@ class User
      */
     public static function getLoggedInUser(): ?User
     {
-        if (isset($_SESSION['user_id'])) {
+        if (isset ($_SESSION['user_id'])) {
             return self::getById($_SESSION['user_id']);
         } else {
             return null;
@@ -72,7 +101,7 @@ class User
      * - display_name: The display name of the user.
      * - username: The username of the user.
      * - email: The email address of the user.
-     * - password_hash: The password hash of the user.
+     * - password: The password hash of the user.
      * - status: The status of the user.
      * - id: Optional - The ID of the user. This must only be used when the user is loaded from the database.
      */
@@ -81,7 +110,7 @@ class User
         $this->displayName = $dbRow['display_name'] ?? '';
         $this->username = $dbRow['username'] ?? '';
         $this->email = $dbRow['email'] ?? '';
-        $this->passwordHash = $dbRow['password_hash'] ?? '';
+        $this->passwordHash = $dbRow['password'] ?? '';
 
         $this->status = $dbRow['status'] ?? UserStatus::Unverified->value;
 
@@ -113,6 +142,14 @@ class User
 
         //TODO: Implement this method
         return false;
+    }
+
+    /**
+     * @return int|null The ID of the user, or null if the user is new.
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     /**

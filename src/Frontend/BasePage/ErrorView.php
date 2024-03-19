@@ -12,15 +12,15 @@ class ErrorView extends View
 
     public function render(array $data = []): void
     {
-        if (isset($data['error_message'])) {
+        if (isset ($data['error_message'])) {
             ?>
-            <div class="alert alert-warning" role="alert">
+            <div class="alert alert-danger" role="alert">
                 <?php echo $data['error_message']; ?>
             </div>
             <?php
         }
 
-        if (isset($data['warning_message'])) {
+        if (isset ($data['warning_message'])) {
             ?>
             <div class="alert alert-warning" role="alert">
                 <?php echo $data['warning_message']; ?>
@@ -28,7 +28,7 @@ class ErrorView extends View
             <?php
         }
 
-        if (isset($data['info_message'])) {
+        if (isset ($data['info_message'])) {
             ?>
             <div class="alert alert-info" role="alert">
                 <?php echo $data['info_message']; ?>

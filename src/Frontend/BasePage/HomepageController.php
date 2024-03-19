@@ -5,6 +5,7 @@ namespace A11yBuddy\Frontend\BasePage;
 use A11yBuddy\Application;
 use A11yBuddy\Frontend\Localize;
 use A11yBuddy\Frontend\Controller;
+use A11yBuddy\User\User;
 
 class HomepageController extends Controller
 {
@@ -20,7 +21,14 @@ class HomepageController extends Controller
     {
         ?>
         <h1>
-            <?php echo Localize::translate("welcome", "Welcome to a11yBuddy") ?>
+            <?php
+            $loggedIn = User::getLoggedInUser();
+            if ($loggedIn instanceof User) {
+                echo "Welcome " . $loggedIn->getDisplayName();
+            } else {
+                echo Localize::translate("welcome", "Welcome to a11yBuddy");
+            }
+            ?>
         </h1>
         <p>
             <?php echo Application::getInstance()->getSessionManager()->isLoggedIn() ? "You are logged in." : "You are not logged in." ?>

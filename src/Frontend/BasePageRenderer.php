@@ -3,6 +3,8 @@
 namespace A11yBuddy\Frontend;
 
 use A11yBuddy\Application;
+use A11yBuddy\Frontend\Authentication\LoginController;
+use A11yBuddy\Frontend\Authentication\LogoutController;
 use A11yBuddy\Frontend\BasePage\BasePageController;
 use A11yBuddy\Frontend\BasePage\HomepageController;
 use A11yBuddy\Frontend\CreateProject\CreateProjectController;
@@ -38,6 +40,13 @@ class BasePageRenderer
         // All routes
         $this->router->addRoute("GET", "/", HomepageController::class);
 
+        // Authentication
+        $this->router->addRoute("GET", "/login", LoginController::class);
+        $this->router->addRoute("POST", "/login", LoginController::class);
+
+        $this->router->addRoute("GET", "/logout", LogoutController::class);
+
+        // Create project
         $this->router->addRoute("GET", "/create", CreateProjectController::class);
         $this->router->addRoute("POST", "/create", CreateProjectController::class);
 

@@ -10,13 +10,13 @@
     },
     "scripts": {
         "post-update-cmd": [
-            "rm -rf assets/",
-            "mkdir -p assets/",
+            "rm -rf assets/bootstap/",
+            "mkdir -p assets/bootstap/",
             "cp -r vendor/twbs/bootstrap/dist/ assets/bootstrap/"
         ],
         "post-install-cmd": [
-            "rm -rf assets/",
-            "mkdir -p assets/",
+            "rm -rf assets/bootstrap/",
+            "mkdir -p assets/bootstap/",
             "cp -r vendor/twbs/bootstrap/dist/ assets/bootstrap/"
         ],
         "test": "./vendor/bin/phpunit tests",

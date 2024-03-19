@@ -31,7 +31,6 @@ class Database
     private function connect()
     {
         $dsn = "mysql:host={$this->config['host']};dbname={$this->config['dbname']};charset=utf8mb4";
-        echo $dsn;
 
         try {
             $pdo = new \PDO($dsn, $this->config['username'], $this->config['password']);
