@@ -220,9 +220,10 @@ class User
      * Sets the username of the user. Does validation (duplicate check, length check)
      * 
      * @param string $username The new username of the user.
+     * @param bool $duplicateCheck Whether to check if the username is already in use.
      * @return bool True if the username was set successfully, false if a user with the same username already exists.
      */
-    public function setUsername(string $username): bool
+    public function setUsername(string $username, bool $duplicateCheck = true): bool
     {
         if (strlen($username) < 3 || strlen($username) > 20) {
             return false;
@@ -232,7 +233,7 @@ class User
             return false;
         }
 
-        if (User::getByUsername($username) !== null) {
+        if ($duplicateCheck && User::getByUsername($username) !== null) {
             return false;
         }
 
@@ -253,15 +254,16 @@ class User
      * When updating the value, make sure to re-verify the email address and to change the users' status to Unverified.
      * 
      * @param string $email The new email address of the user.
+     * @param bool $duplicateCheck Whether to check if the email address is already in use.
      * @return bool True if the email address was set successfully, false otherwise.
      */
-    public function setEmail(string $email): bool
+    public function setEmail(string $email, bool $duplicateCheck = true): bool
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return false;
         }
 
-        if (User::getByEmail($email) !== null) {
+        if ($duplicateCheck && User::getByEmail($email) !== null) {
             return false;
         }
 

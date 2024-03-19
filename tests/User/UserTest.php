@@ -40,11 +40,11 @@ class UserTest extends TestCase
         ]);
 
         // Test setting a valid email
-        $this->assertTrue($user->setEmail('john2@doe.invalid'));
+        $this->assertTrue($user->setEmail('john2@doe.invalid', false));
         $this->assertEquals('john2@doe.invalid', $user->getEmail());
 
         // Test setting an invalid email
-        $this->assertFalse($user->setEmail('invalid-email'));
+        $this->assertFalse($user->setEmail('invalid-email', false));
         $this->assertNotEquals('invalid-email', $user->getEmail());
         $this->assertEquals('john2@doe.invalid', $user->getEmail());
 
@@ -62,11 +62,11 @@ class UserTest extends TestCase
         ]);
 
         // Test setting a valid username
-        $this->assertTrue($user->setUsername('john_doe2'));
+        $this->assertTrue($user->setUsername('john_doe2', false));
         $this->assertEquals('john_doe2', $user->getUsername());
 
         // Test setting an invalid username
-        $this->assertFalse($user->setUsername('invalid-username'));
+        $this->assertFalse($user->setUsername('invalid-username', false));
         $this->assertNotEquals('invalid-username', $user->getUsername());
         $this->assertEquals('john_doe2', $user->getUsername());
 
