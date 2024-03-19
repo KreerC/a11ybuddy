@@ -33,9 +33,7 @@ class NavigationView extends View
                         <?php
 
                         $nav = [
-                            "/discover" => "Discover",
-                            "/create" => "Create new project",
-                            "/my-projects" => "My projects",
+                            "/discover" => "Discover"
                         ];
 
                         foreach ($nav as $route => $label) {
@@ -65,6 +63,9 @@ class NavigationView extends View
                             } else {
                                 ?>
                                 <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="/projects">
+                                            <?= Localize::translate("my-projects", "My projects") ?>
+                                        </a></li>
                                     <li><a class="dropdown-item" href="/logout">
                                             <?= Localize::translate("logout", "Log Out") ?>
                                         </a></li>

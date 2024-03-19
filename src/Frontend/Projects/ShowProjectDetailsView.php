@@ -22,14 +22,16 @@ class ShowProjectDetailsView extends View
         <h2>Project details</h2>
         <p>
             This is where the details of the project will be displayed.
+        </p>
+        <table class="table table-striped">
+            <tr>
+                <?php
+                foreach (array_keys($workflows[0]) as $workflow) {
+                    echo "<th>" . $workflow . "</th>";
+                }
+                ?>
+            </tr>
             <?php
-            // Echo the keys as a table heading
-            echo "<table>";
-            echo "<tr>";
-            foreach (array_keys($workflows[0]) as $workflow) {
-                echo "<th>" . $workflow . "</th>";
-            }
-            echo "</tr>";
             foreach ($workflows as $workflow) {
                 echo "<tr>";
                 foreach ($workflow as $workflow) {
@@ -37,9 +39,8 @@ class ShowProjectDetailsView extends View
                 }
                 echo "</tr>";
             }
-            echo "</table>";
             ?>
-        </p>
+        </table>
         <?php
     }
 

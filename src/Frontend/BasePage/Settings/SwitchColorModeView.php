@@ -16,7 +16,7 @@ class SwitchColorModeView extends View
         <button onclick="toggleDarkMode()">
             Toggle dark mode
         </button>
-        <script src="assets/js/darkModeToggle.js"></script>
+        <script src="/assets/js/darkModeToggle.js"></script>
         <?php
     }
 
