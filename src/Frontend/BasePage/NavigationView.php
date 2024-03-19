@@ -49,14 +49,29 @@ class NavigationView extends View
                                 aria-expanded="false">
                                 <?= Localize::translate("account", "Account") ?>
                             </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/login">
-                                        <?= Localize::translate("login", "Log In") ?>
-                                    </a></li>
-                                <li><a class="dropdown-item" href="/signup">
-                                        <?= Localize::translate("signup", "Sign Up") ?>
-                                    </a></li>
-                            </ul>
+
+                            <?php
+                            if (!Application::getInstance()->getSessionManager()->isLoggedIn()) {
+                                ?>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="/login">
+                                            <?= Localize::translate("login", "Log In") ?>
+                                        </a></li>
+                                    <li><a class="dropdown-item" href="/signup">
+                                            <?= Localize::translate("signup", "Sign Up") ?>
+                                        </a></li>
+                                </ul>
+                                <?php
+                            } else {
+                                ?>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="/logout">
+                                            <?= Localize::translate("logout", "Log Out") ?>
+                                        </a></li>
+                                </ul>
+                                <?php
+                            }
+                            ?>
                         </li>
                     </ul>
                 </div>
