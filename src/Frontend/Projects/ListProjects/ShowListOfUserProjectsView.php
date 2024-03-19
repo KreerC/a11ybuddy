@@ -14,9 +14,6 @@ class ShowListOfUserProjectsView extends View
         <h1>
             Your projects
         </h1>
-        <p>
-            This is where the list of your projects will be displayed.
-        </p>
         <table class="table table-striped">
             <tr>
                 <?php

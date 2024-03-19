@@ -8,6 +8,11 @@ use A11yBuddy\Frontend\Controller;
 class ShowUserProjectsController extends Controller
 {
 
+    public function getPageTitle(): string
+    {
+        return 'Your projects';
+    }
+
     public function run(array $data = []): void
     {
         // Make sure the user is logged in
@@ -21,8 +26,7 @@ class ShowUserProjectsController extends Controller
 
         $projects = $query->fetchAll(\PDO::FETCH_ASSOC);
 
-        $view = new ShowListOfUserProjectsView();
-        $view->render(["projects" => $projects]);
+        ShowListOfUserProjectsView::use(["projects" => $projects]);
     }
 
 }

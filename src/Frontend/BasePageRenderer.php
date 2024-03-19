@@ -37,7 +37,7 @@ class BasePageRenderer
     /**
      * Central location for registering routes for the application
      */
-    private function registerRoutes()
+    private function registerRoutes(): void
     {
         // All routes
         $this->router->addRoute("GET", "/", HomepageController::class);
@@ -45,7 +45,6 @@ class BasePageRenderer
         // Authentication
         $this->router->addRoute("GET", "/login", LoginController::class);
         $this->router->addRoute("POST", "/login", LoginController::class);
-
         $this->router->addRoute("GET", "/logout", LogoutController::class);
 
         // Projects

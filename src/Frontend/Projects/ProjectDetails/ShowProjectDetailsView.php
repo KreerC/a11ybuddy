@@ -20,9 +20,6 @@ class ShowProjectDetailsView extends View
             <?= $project->getName() ?>
         </h1>
         <h2>Project details</h2>
-        <p>
-            This is where the details of the project will be displayed.
-        </p>
         <table class="table table-striped">
             <tr>
                 <?php

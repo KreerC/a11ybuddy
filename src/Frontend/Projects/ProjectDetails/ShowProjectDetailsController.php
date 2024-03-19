@@ -9,9 +9,14 @@ use A11yBuddy\Project\Project;
 
 class ShowProjectDetailsController extends Controller
 {
+
+    public function getPageTitle(): string
+    {
+        return 'Project details';
+    }
+
     public function run(array $data = []): void
     {
-
         $project = Project::getByTextIdentifier($data["id"]);
         if ($project === null) {
             $notFoundController = new NotFoundController();
@@ -19,8 +24,6 @@ class ShowProjectDetailsController extends Controller
             return;
         }
 
-        $view = new ShowProjectDetailsView();
-        $view->render(["project" => $project]);
-
+        ShowProjectDetailsView::use(["project" => $project]);
     }
 }
