@@ -2,6 +2,7 @@
 
 namespace A11yBuddy\Frontend\Projects\ListProjects;
 
+use A11yBuddy\Frontend\Localize;
 use A11yBuddy\Frontend\View;
 
 /**
@@ -18,6 +19,12 @@ class ShowListOfUserProjectsView extends View
         <h1>
             Your projects
         </h1>
+        <?php
+        if (empty ($projects)) {
+            echo "<p>No projects found</p>";
+            return;
+        }
+        ?>
         <table class="table table-striped">
             <tr>
                 <?php
@@ -44,5 +51,13 @@ class ShowListOfUserProjectsView extends View
             ?>
         </table>
         <?php
+        // If these are the user's projects, show a link to create a new project
+        if (isset ($_SESSION["user_id"]) && $_SESSION["user_id"] === $projects[0]["user_id"]) {
+            ?>
+            <a href="/create" class="btn btn-primary">
+                <?= Localize::translate("create", "Create a new project") ?>
+            </a>
+            <?php
+        }
     }
 }

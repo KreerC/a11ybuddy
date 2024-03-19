@@ -1,6 +1,6 @@
 <?php
 
-namespace A11yBuddy\Frontend\CreateProject;
+namespace A11yBuddy\Frontend\Projects\CreateProject;
 
 use A11yBuddy\Frontend\BasePage\ErrorView;
 use A11yBuddy\Frontend\View;
