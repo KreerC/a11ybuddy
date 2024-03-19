@@ -44,10 +44,6 @@ class Project
         $result = $db->query('SELECT * FROM workflows WHERE project = :project', [':project' => $this->id]);
         $result = $result->fetchAll(\PDO::FETCH_ASSOC);
 
-        if ($result === false) {
-            return [];
-        }
-
         return $result; //TODO map to Workflow objects
     }
 

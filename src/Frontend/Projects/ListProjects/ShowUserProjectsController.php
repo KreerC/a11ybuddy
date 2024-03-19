@@ -1,6 +1,6 @@
 <?php
 
-namespace A11yBuddy\Frontend\Projects;
+namespace A11yBuddy\Frontend\Projects\ListProjects;
 
 use A11yBuddy\Application;
 use A11yBuddy\Frontend\Controller;

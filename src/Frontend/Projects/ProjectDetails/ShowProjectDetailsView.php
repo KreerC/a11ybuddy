@@ -1,6 +1,6 @@
 <?php
 
-namespace A11yBuddy\Frontend\Projects;
+namespace A11yBuddy\Frontend\Projects\ProjectDetails;
 
 use A11yBuddy\Frontend\View;
 

@@ -1,9 +1,10 @@
 <?php
 
-namespace A11yBuddy\Frontend\Projects;
+namespace A11yBuddy\Frontend\Projects\ProjectDetails;
 
 use A11yBuddy\Frontend\BasePage\NotFoundController;
 use A11yBuddy\Frontend\Controller;
+use A11yBuddy\Frontend\Projects\ProjectDetails\ShowProjectDetailsView;
 use A11yBuddy\Project\Project;
 
 class ShowProjectDetailsController extends Controller
