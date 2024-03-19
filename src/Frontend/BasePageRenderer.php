@@ -8,6 +8,7 @@ use A11yBuddy\Frontend\Authentication\LogoutController;
 use A11yBuddy\Frontend\BasePage\BasePageController;
 use A11yBuddy\Frontend\BasePage\HomepageController;
 use A11yBuddy\Frontend\CreateProject\CreateProjectController;
+use A11yBuddy\Frontend\Projects\ShowProjectDetailsController;
 use A11yBuddy\Router;
 
 /**
@@ -46,9 +47,11 @@ class BasePageRenderer
 
         $this->router->addRoute("GET", "/logout", LogoutController::class);
 
-        // Create project
+        // Projects
         $this->router->addRoute("GET", "/create", CreateProjectController::class);
         $this->router->addRoute("POST", "/create", CreateProjectController::class);
+
+        $this->router->addRoute("GET", "/projects/{id}", ShowProjectDetailsController::class);
 
         // Register custom pages
         $customPages = Application::getInstance()->getConfig()["custom_pages"] ?? [];
