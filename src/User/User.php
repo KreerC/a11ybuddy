@@ -71,6 +71,9 @@ class User
         return new User($result);
     }
 
+
+    private static ?User $loggedInUser = null;
+
     /**
      * Gets the currently logged in user object.
      * 
@@ -78,8 +81,11 @@ class User
      */
     public static function getLoggedInUser(): ?User
     {
-        if (isset ($_SESSION['user_id'])) {
-            return self::getById($_SESSION['user_id']);
+        if (isset ($_SESSION['user_id']) && self::$loggedInUser === null) {
+            self::$loggedInUser = self::getById($_SESSION['user_id']);
+            return self::$loggedInUser;
+        } elseif (self::$loggedInUser !== null) {
+            return self::$loggedInUser;
         } else {
             return null;
         }
