@@ -4,6 +4,9 @@ namespace A11yBuddy\Frontend\Projects\ProjectDetails;
 
 use A11yBuddy\Frontend\View;
 
+/**
+ * Shows details of a project
+ */
 class ShowProjectDetailsView extends View
 {
 
@@ -20,6 +23,12 @@ class ShowProjectDetailsView extends View
             <?= $project->getName() ?>
         </h1>
         <h2>Project details</h2>
+        <?php
+        if (empty ($workflows)) {
+            echo "<p>No workflows found</p>";
+            return;
+        }
+        ?>
         <table class="table table-striped">
             <tr>
                 <?php

@@ -5,6 +5,9 @@ namespace A11yBuddy\Frontend\Projects\ListProjects;
 use A11yBuddy\Application;
 use A11yBuddy\Frontend\Controller;
 
+/**
+ * Shows a list of projects for the logged in user
+ */
 class ShowUserProjectsController extends Controller
 {
 

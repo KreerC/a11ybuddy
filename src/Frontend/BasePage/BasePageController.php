@@ -65,7 +65,7 @@ class BasePageController extends Controller
             NavigationView::use([]);
             ?>
 
-            <main>
+            <main id="content">
                 <div class="container mt-3">
                     <?php
                     if ($this->subController instanceof Controller) {

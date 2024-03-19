@@ -2,11 +2,15 @@
 
 namespace A11yBuddy\Frontend\Projects\ListProjects;
 
-use A11yBuddy\Application;
 use A11yBuddy\Frontend\View;
 
+/**
+ * Shows the list of projects supplied.
+ */
 class ShowListOfUserProjectsView extends View
 {
+
+    // TODO this works for any user, but right now it's only used for the logged in user
     public function render(array $data = []): void
     {
         $projects = $data["projects"];

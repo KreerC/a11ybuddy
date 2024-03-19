@@ -2,7 +2,6 @@
 
 namespace A11yBuddy\Frontend\Authentication;
 
-use A11yBuddy\Application;
 use A11yBuddy\Frontend\Controller;
 use A11yBuddy\User\User;
 

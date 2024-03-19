@@ -15,6 +15,7 @@ class NavigationView extends View
 
     public function render(array $data = []): void
     {
+        SkipLinkView::use();
         ?>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container">
