@@ -7,7 +7,7 @@ use A11yBuddy\Frontend\Authentication\LoginController;
 use A11yBuddy\Frontend\Authentication\LogoutController;
 use A11yBuddy\Frontend\BasePage\BasePageController;
 use A11yBuddy\Frontend\BasePage\HomepageController;
-use A11yBuddy\Frontend\CreateProject\CreateProjectController;
+use A11yBuddy\Frontend\Projects\CreateProject\CreateProjectController;
 use A11yBuddy\Frontend\Projects\ProjectDetails\ShowProjectDetailsController;
 use A11yBuddy\Frontend\Projects\ListProjects\ShowUserProjectsController;
 use A11yBuddy\Router;
