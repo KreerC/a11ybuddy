@@ -50,7 +50,9 @@ class CronjobTaskManager
             $timestamp = time();
 
         foreach ($this->tasks as $task) {
-            if ($task->canRun($timestamp))
+            $task->plannedTimestamp = $timestamp;
+
+            if ($task->canRun())
                 $task->run();
         }
     }

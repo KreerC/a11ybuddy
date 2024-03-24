@@ -19,10 +19,10 @@ class TestCronjobTask extends CronjobTask
 class TimedTestCronjobTask extends TestCronjobTask
 {
 
-    public function canRun(int $timestamp = -1): bool
+    public function canRun(): bool
     {
         // If more than 60 seconds have passed before running, don't run.
-        if ($timestamp <= time() - 60)
+        if ($this->plannedTimestamp <= time() - 60)
             return false;
 
         return true;
@@ -32,6 +32,7 @@ class TimedTestCronjobTask extends TestCronjobTask
 
 class CronjobTaskManagerTest extends TestCase
 {
+
     public function testAddAndExecuteCronjobTask(): void
     {
         $taskManager = new CronjobTaskManager();
