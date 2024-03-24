@@ -37,11 +37,20 @@ class CronjobTaskManager
 
     /**
      * Runs all tasks that can be run.
+     * 
+     * @param int $timestamp The timestamp to check a tasks ability to run for. 
+     *  If it is -1, use the current time instead.
      */
-    public function runTasks()
+    public function runTasks(int $timestamp = -1): void
     {
+        // Because some tasks might take a really long time to run 
+        // and block the next task from running at the right time,
+        // we will get the current time once and pass it down to all tasks.
+        if ($timestamp === -1)
+            $timestamp = time();
+
         foreach ($this->tasks as $task) {
-            if ($task->canRun())
+            if ($task->canRun($timestamp))
                 $task->run();
         }
     }
