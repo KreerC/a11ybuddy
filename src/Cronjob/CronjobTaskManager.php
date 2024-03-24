@@ -23,8 +23,7 @@ class CronjobTaskManager
      */
     private function registerAllTasks(): void
     {
-        // TODO
-        return;
+        $this->addTask(new Tasks\Account\DeleteUnverifiedUsersTask());
     }
 
     /** 
