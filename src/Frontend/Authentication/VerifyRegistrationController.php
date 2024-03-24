@@ -9,6 +9,16 @@ use A11yBuddy\Frontend\Controller;
 class VerifyRegistrationController extends Controller
 {
 
+    public function isForAnonymousOnly(): bool
+    {
+        return true;
+    }
+
+    public function getPageTitle(): string
+    {
+        return 'Verify Registration';
+    }
+
     public function run(array $data = []): void
     {
         $db = Application::getInstance()->getDatabase();

@@ -11,6 +11,12 @@ use A11yBuddy\User\UserStatus;
  */
 class LoginController extends Controller
 {
+
+    public function isForAnonymousOnly(): bool
+    {
+        return true;
+    }
+
     public function getPageTitle(): string
     {
         return 'Login';

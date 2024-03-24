@@ -8,6 +8,16 @@ use A11yBuddy\User\User;
 class RegistrationController extends Controller
 {
 
+    public function isForAnonymousOnly(): bool
+    {
+        return true;
+    }
+
+    public function getPageTitle(): string
+    {
+        return 'Register';
+    }
+
     public function run(array $data = []): void
     {
         if (

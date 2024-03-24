@@ -43,17 +43,11 @@ class CronjobTaskManager
         if ($timestamp === -1)
             $timestamp = time();
 
-        echo "Running tasks at " . date('Y-m-d H:i:s', $timestamp) . "\n";
-
         foreach ($this->tasks as $task) {
             $task->plannedTimestamp = $timestamp;
 
-            if ($task->canRun()) {
-                echo "Executing " . $task::class . "\n";
+            if ($task->canRun())
                 $task->run();
-            } else {
-                echo "Skipping " . $task::class . "\n";
-            }
         }
     }
 
