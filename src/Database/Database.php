@@ -69,4 +69,14 @@ class Database
         return $stmt;
     }
 
+    /**
+     * Returns the ID of the last inserted row or sequence value
+     * 
+     * @return int The ID of the last inserted row
+     */
+    public function getLastInsertId(): int
+    {
+        return (int) $this->pdo->lastInsertId();
+    }
+
 }
