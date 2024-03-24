@@ -2,24 +2,37 @@
 
 namespace A11yBuddy\Frontend\Authentication;
 
+use A11yBuddy\Application;
 use A11yBuddy\Frontend\Controller;
 use A11yBuddy\User\User;
 
 class RegistrationController extends Controller
 {
 
-    public function isForAnonymousOnly(): bool
-    {
-        return true;
-    }
-
     public function getPageTitle(): string
     {
         return 'Register';
     }
 
+    public function isForAnonymousOnly(): bool
+    {
+        return true;
+    }
+
+    public function isNoFollow(): bool
+    {
+        return true;
+    }
+
     public function run(array $data = []): void
     {
+
+        // When the registration is disabled, show a warning message.
+        if (Application::getInstance()->getConfig()["app"]["allowRegistration"] === false) {
+            $data["registration_disabled"] = true;
+            $data["warning_message"] = "Public account registration is disabled on this platform.";
+        }
+
         if (
             isset ($_POST['username']) &&
             isset ($_POST['email']) &&

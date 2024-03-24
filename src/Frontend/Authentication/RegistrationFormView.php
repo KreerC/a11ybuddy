@@ -18,6 +18,12 @@ class RegistrationFormView extends View
 
         <?php ErrorView::use($data); ?>
 
+        <?php
+        if (isset ($data["registration_disabled"])) {
+            return;
+        }
+        ?>
+
         <form action="/signup" method="post">
             <label class="form-label mb-3" for="username">Username</label>
             <input class="form-control mb-3" type="text" id="username" name="username" style="text-transform: lowercase"
