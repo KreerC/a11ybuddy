@@ -68,7 +68,7 @@ class BasePageController extends Controller
             $this->subController instanceof Controller &&
             $this->subController->isForAdminOnly()
         ) {
-            $this->subController->setRenderer($this->renderer);
+            $this->subController = new NotFoundController();
         }
 
         // Handle JSON
