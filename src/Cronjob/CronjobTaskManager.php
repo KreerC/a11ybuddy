@@ -13,15 +13,10 @@ class CronjobTaskManager
      */
     private array $tasks = [];
 
-    public function __construct()
-    {
-        $this->registerAllTasks();
-    }
-
     /**
      * Registers all tasks that are shipped and required by the application.
      */
-    private function registerAllTasks(): void
+    public function registerInbuiltTasks(): void
     {
         $this->addTask(new Tasks\Account\DeleteUnverifiedUsersTask());
     }

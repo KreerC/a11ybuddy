@@ -32,6 +32,7 @@ $app = new Application($config);
 // If we are a CLI script, only run the periodic tasks
 if (php_sapi_name() === 'cli') {
     $taskManager = new A11yBuddy\Cronjob\CronjobTaskManager();
+    $taskManager->registerInbuiltTasks();
     $taskManager->runTasks();
     exit (0);
 }
