@@ -2,6 +2,8 @@
 
 namespace A11yBuddy\Database;
 
+use A11yBuddy\Logger;
+
 /**
  * A helper to interact with the Database of the application
  */
@@ -38,7 +40,7 @@ class Database
             $this->isConnected = true;
             $this->pdo = $pdo;
         } catch (\PDOException $e) {
-            // TODO log error and redirect the user to an error page
+            Logger::error("Could not connect to the database: " . $e->getMessage());
             throw $e;
         }
     }
@@ -65,6 +67,9 @@ class Database
         }
 
         $stmt = $this->pdo->prepare($sql);
+
+        Logger::debug("Executing database query: " . $sql . " with params: " . json_encode($params));
+
         $stmt->execute($params);
         return $stmt;
     }

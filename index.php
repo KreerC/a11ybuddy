@@ -8,6 +8,7 @@ session_start();
 require_once ("vendor/autoload.php");
 
 use A11yBuddy\Application;
+use A11yBuddy\Logger;
 
 $config = require_once ("config.php");
 
@@ -26,6 +27,8 @@ if (file_exists("config.example.php")) {
         exit (1);
     }
 }
+
+Logger::$isDebugMode = $config['logging']['debug'] ?? false;
 
 $app = new Application($config);
 

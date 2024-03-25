@@ -4,6 +4,7 @@ namespace A11yBuddy\Cronjob\Tasks\Account;
 
 use A11yBuddy\Application;
 use A11yBuddy\Cronjob\CronjobTask;
+use A11yBuddy\Logger;
 
 /**
  * Deletes all users that have not verified their email address within 24 hours.
@@ -25,7 +26,7 @@ class DeleteUnverifiedUsersTask extends CronjobTask
 
         $users = $result->fetchAll(\PDO::FETCH_ASSOC);
 
-        echo 'Deleting ' . count($users) . ' unverified users.' . PHP_EOL;
+        Logger::info('Deleting ' . count($users) . ' unverified users.' . PHP_EOL);
 
         // Delete all users
         foreach ($users as $user) {

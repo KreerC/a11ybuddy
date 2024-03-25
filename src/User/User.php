@@ -3,6 +3,7 @@
 namespace A11yBuddy\User;
 
 use A11yBuddy\Application;
+use A11yBuddy\Logger;
 
 /**
  * A model of the user that can interact with the database.
@@ -158,6 +159,8 @@ class User
 
             $this->id = $db->getLastInsertId();
 
+            Logger::info("Created new user '" . $this->getUsername() . "' with ID " . $this->getId());
+
             return true;
         }
 
@@ -170,6 +173,8 @@ class User
             ':status' => $this->status,
             ':id' => $this->id
         ]);
+
+        Logger::info("Updated user '" . $this->getUsername() . "' with ID " . $this->getId());
 
         return (bool) $result->rowCount();
     }

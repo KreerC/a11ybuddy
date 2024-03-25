@@ -43,5 +43,9 @@ return [
                 "/example" => "Example custom page",
             ]
         ]
+    ],
+    'logging' => [
+        "debug" => false,
+        "keepForDays" => 7,
     ]
 ];

@@ -2,6 +2,8 @@
 
 namespace A11yBuddy\Cronjob;
 
+use A11yBuddy\Logger;
+
 /**
  * Manages periodic tasks that run via cron job.
  */
@@ -19,6 +21,7 @@ class CronjobTaskManager
     public function registerInbuiltTasks(): void
     {
         $this->addTask(new Tasks\Account\DeleteUnverifiedUsersTask());
+        $this->addTask(new Tasks\Logging\PurgeLogsTask());
     }
 
     /** 
@@ -32,22 +35,28 @@ class CronjobTaskManager
     /**
      * Runs all tasks that can be run.
      * 
-     * @param int $timestamp The timestamp to check a tasks ability to run for. 
-     *  If it is -1, use the current time instead.
+     * @param null|int $timestamp The timestamp to check a tasks ability to run for. 
+     *  If it is null, use the current time instead.
+     * @param bool $roundToNearestMinute If true, round the timestamp to the nearest minute.
      */
-    public function runTasks(int $timestamp = -1): void
+    public function runTasks(null|int $timestamp = null, bool $roundToNearestMinute = true): void
     {
         // Because some tasks might take a really long time to run 
         // and block the next task from running at the right time,
         // we will get the current time once and pass it down to all tasks.
-        if ($timestamp === -1)
+        if ($timestamp === null)
             $timestamp = time();
+
+        if ($roundToNearestMinute)
+            $timestamp = $timestamp - $timestamp % 60;
 
         foreach ($this->tasks as $task) {
             $task->plannedTimestamp = $timestamp;
 
-            if ($task->canRun())
+            if ($task->canRun()) {
+                Logger::info("Running Task " . $task::class);
                 $task->run();
+            }
         }
     }
 
