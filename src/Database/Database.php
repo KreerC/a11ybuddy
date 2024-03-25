@@ -30,7 +30,12 @@ class Database
         $this->config = $config;
     }
 
-    private function connect()
+    /**
+     * Establishes a connection to the database
+     * 
+     * @return bool Whether the connection was successful
+     */
+    private function connect(): bool
     {
         $dsn = "mysql:host={$this->config['host']};dbname={$this->config['dbname']};charset=utf8mb4";
 
@@ -39,10 +44,12 @@ class Database
             $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             $this->isConnected = true;
             $this->pdo = $pdo;
+            return true;
         } catch (\PDOException $e) {
             Logger::error("Could not connect to the database: " . $e->getMessage());
-            throw $e;
         }
+
+        return false;
     }
 
     /**
@@ -67,10 +74,9 @@ class Database
         }
 
         $stmt = $this->pdo->prepare($sql);
-
         Logger::debug("Executing database query: " . $sql . " with params: " . json_encode($params));
-
         $stmt->execute($params);
+
         return $stmt;
     }
 

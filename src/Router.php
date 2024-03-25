@@ -60,11 +60,11 @@ class Router
      */
     public function addRoute(string $method, string $path, string|callable $handler, bool $override = false): bool
     {
-        if (!isset($this->routes[$method])) {
+        if (!isset ($this->routes[$method])) {
             return false;
         }
 
-        if (isset($this->routes[$method][$path]) && !$override) {
+        if (isset ($this->routes[$method][$path]) && !$override) {
             return false;
         }
 
@@ -98,8 +98,7 @@ class Router
                     return [new $handler(), $matches];
                 }
 
-
-
+                Logger::error("Handler for " . $requestPath . " is not a function or a class");
                 throw new \Exception("Handler for " . $requestPath . " is not a function or a class");
             }
         }

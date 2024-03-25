@@ -4,6 +4,7 @@ namespace A11yBuddy\Frontend;
 
 use A11yBuddy\Application;
 use A11yBuddy\Frontend\BasePage\NotFoundController;
+use A11yBuddy\Logger;
 use A11yBuddy\Router;
 
 /**
@@ -23,7 +24,7 @@ class CustomPageController extends Controller
         $customPages = Application::getInstance()->getConfig()["custom_pages"] ?? [];
 
         $route = Router::getRequestUri();
-        if (isset($customPages[$route])) {
+        if (isset ($customPages[$route])) {
             $this->renderMode = $customPages[$route]["type"] ?? "markdown";
             $lang = Localize::getInstance()->getLocale();
 
@@ -41,7 +42,7 @@ class CustomPageController extends Controller
 
     public function run(array $data = []): void
     {
-        if (!empty($this->file)) {
+        if (!empty ($this->file)) {
             $fileContent = file_get_contents($this->file);
 
             if ($this->renderMode === "markdown") {
@@ -52,6 +53,7 @@ class CustomPageController extends Controller
             } elseif ($this->renderMode === "html") {
                 echo $fileContent;
             } else {
+                Logger::error("User requested a custom page with invalid type " . $this->renderMode);
                 throw new \Exception("Unknown custom page type: " . $this->renderMode);
             }
         } else {

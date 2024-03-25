@@ -2,3 +2,5 @@
 .DS_Store
 /assets/bootstrap/
 /config.php
+.htaccess
+/logs/

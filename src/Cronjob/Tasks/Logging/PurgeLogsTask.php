@@ -22,7 +22,7 @@ class PurgeLogsTask extends CronjobTask
 
         // Move the current log file to a new file
         foreach ($logFiles as $logFile) {
-            $newLogFile = $logFile . "." . date("Ymd");
+            $newLogFile = $logFile . "." . date("Ymd", strtotime("-1 day"));
             rename($logFile, $newLogFile);
         }
 
