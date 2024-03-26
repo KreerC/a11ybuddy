@@ -82,14 +82,16 @@ class User
      */
     public static function getLoggedInUser(): ?User
     {
-        if (isset ($_SESSION['user_id']) && self::$loggedInUser === null) {
+        if (self::$loggedInUser !== null) {
+            return self::$loggedInUser;
+        }
+
+        if (Application::getInstance()->getSessionManager()->isLoggedIn()) {
             self::$loggedInUser = self::getById($_SESSION['user_id']);
             return self::$loggedInUser;
-        } elseif (self::$loggedInUser !== null) {
-            return self::$loggedInUser;
-        } else {
-            return null;
         }
+
+        return null;
     }
 
 
