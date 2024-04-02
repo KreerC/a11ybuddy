@@ -3,16 +3,29 @@
 namespace A11yBuddy\Frontend\Authentication;
 
 use A11yBuddy\Frontend\Controller;
+use A11yBuddy\Logger;
 use A11yBuddy\User\User;
+use A11yBuddy\User\UserStatus;
 
 /**
  * Handles the login logic
  */
 class LoginController extends Controller
 {
+
     public function getPageTitle(): string
     {
         return 'Login';
+    }
+
+    public function isForAnonymousOnly(): bool
+    {
+        return true;
+    }
+
+    public function isNoFollow(): bool
+    {
+        return true;
     }
 
     public function run(array $data = []): void
@@ -21,8 +34,16 @@ class LoginController extends Controller
             $user = User::getByEmail($_POST['email']);
 
             if ($user instanceof User) {
+                if ($user->getStatus() === UserStatus::Unverified) {
+                    Logger::debug('User ' . $user->getUsername() . ' tried to log in with unverified account');
+                    $data['error_message'] = 'Your account has not been verified yet. Please check your e-mail for the verification link.';
+                    LoginFormView::use($data);
+                    return;
+                }
+
                 if ($user->checkPassword($_POST['password'])) {
                     // Log the user in
+                    Logger::debug('User ' . $user->getUsername() . ' logged in');
                     $_SESSION['user_id'] = $user->getId();
                     header('Location: /');
                     exit();

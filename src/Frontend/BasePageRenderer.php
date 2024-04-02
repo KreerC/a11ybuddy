@@ -5,6 +5,8 @@ namespace A11yBuddy\Frontend;
 use A11yBuddy\Application;
 use A11yBuddy\Frontend\Authentication\LoginController;
 use A11yBuddy\Frontend\Authentication\LogoutController;
+use A11yBuddy\Frontend\Authentication\RegistrationController;
+use A11yBuddy\Frontend\Authentication\VerifyRegistrationController;
 use A11yBuddy\Frontend\BasePage\BasePageController;
 use A11yBuddy\Frontend\BasePage\HomepageController;
 use A11yBuddy\Frontend\Projects\CreateProject\CreateProjectController;
@@ -45,7 +47,13 @@ class BasePageRenderer
         // Authentication
         $this->router->addRoute("GET", "/login", LoginController::class);
         $this->router->addRoute("POST", "/login", LoginController::class);
+
         $this->router->addRoute("GET", "/logout", LogoutController::class);
+
+        $this->router->addRoute("GET", "/signup", RegistrationController::class);
+        $this->router->addRoute("POST", "/signup", RegistrationController::class);
+
+        $this->router->addRoute("GET", "/signup/verify/{token}", VerifyRegistrationController::class);
 
         // Projects
         $this->router->addRoute("GET", "/create", CreateProjectController::class);

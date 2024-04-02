@@ -12,6 +12,11 @@ use A11yBuddy\Frontend\Controller;
 class NotFoundController extends Controller
 {
 
+    public function isNoFollow(): bool
+    {
+        return true;
+    }
+
     public function getPageTitle(): string
     {
         return Localize::translate("not_found", "Page Not Found");

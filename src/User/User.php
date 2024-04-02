@@ -3,6 +3,7 @@
 namespace A11yBuddy\User;
 
 use A11yBuddy\Application;
+use A11yBuddy\Logger;
 
 /**
  * A model of the user that can interact with the database.
@@ -81,14 +82,16 @@ class User
      */
     public static function getLoggedInUser(): ?User
     {
-        if (isset ($_SESSION['user_id']) && self::$loggedInUser === null) {
+        if (self::$loggedInUser !== null) {
+            return self::$loggedInUser;
+        }
+
+        if (Application::getInstance()->getSessionManager()->isLoggedIn()) {
             self::$loggedInUser = self::getById($_SESSION['user_id']);
             return self::$loggedInUser;
-        } elseif (self::$loggedInUser !== null) {
-            return self::$loggedInUser;
-        } else {
-            return null;
         }
+
+        return null;
     }
 
 
@@ -140,14 +143,42 @@ class User
      */
     public function save(): bool
     {
+        $db = Application::getInstance()->getDatabase();
+
         if ($this->isNew()) {
             // Insert the user into the database
+            $result = $db->query("INSERT INTO users (display_name, username, email, password, status) VALUES (:display_name, :username, :email, :password, :status)", [
+                ':display_name' => $this->displayName,
+                ':username' => $this->username,
+                ':email' => $this->email,
+                ':password' => $this->passwordHash,
+                ':status' => $this->status
+            ]);
+
+            if ($result->rowCount() === 0) {
+                return false;
+            }
+
+            $this->id = $db->getLastInsertId();
+
+            Logger::info("Created new user '" . $this->getUsername() . "' with ID " . $this->getId());
+
+            return true;
         }
 
         // Update the user in the database
+        $result = $db->query("UPDATE users SET display_name = :display_name, username = :username, email = :email, password = :password, status = :status WHERE id = :id", [
+            ':display_name' => $this->displayName,
+            ':username' => $this->username,
+            ':email' => $this->email,
+            ':password' => $this->passwordHash,
+            ':status' => $this->status,
+            ':id' => $this->id
+        ]);
 
-        //TODO: Implement this method
-        return false;
+        Logger::info("Updated user '" . $this->getUsername() . "' with ID " . $this->getId());
+
+        return (bool) $result->rowCount();
     }
 
     /**
@@ -225,11 +256,13 @@ class User
      */
     public function setUsername(string $username, bool $duplicateCheck = true): bool
     {
+        $username = strtolower($username);
+
         if (strlen($username) < 3 || strlen($username) > 20) {
             return false;
         }
 
-        if (strlen($username) !== strspn($username, 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_')) {
+        if (strlen($username) !== strspn($username, 'abcdefghijklmnopqrstuvwxyz0123456789_')) {
             return false;
         }
 

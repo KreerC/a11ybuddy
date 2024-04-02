@@ -2,6 +2,8 @@
 
 namespace A11yBuddy\Database;
 
+use A11yBuddy\Logger;
+
 /**
  * A helper to interact with the Database of the application
  */
@@ -28,7 +30,12 @@ class Database
         $this->config = $config;
     }
 
-    private function connect()
+    /**
+     * Establishes a connection to the database
+     * 
+     * @return bool Whether the connection was successful
+     */
+    private function connect(): bool
     {
         $dsn = "mysql:host={$this->config['host']};dbname={$this->config['dbname']};charset=utf8mb4";
 
@@ -37,10 +44,12 @@ class Database
             $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             $this->isConnected = true;
             $this->pdo = $pdo;
+            return true;
         } catch (\PDOException $e) {
-            // TODO log error and redirect the user to an error page
-            throw $e;
+            Logger::error("Could not connect to the database: " . $e->getMessage());
         }
+
+        return false;
     }
 
     /**
@@ -65,8 +74,20 @@ class Database
         }
 
         $stmt = $this->pdo->prepare($sql);
+        Logger::debug("Executing database query: " . $sql . " with params: " . json_encode($params));
         $stmt->execute($params);
+
         return $stmt;
+    }
+
+    /**
+     * Returns the ID of the last inserted row or sequence value
+     * 
+     * @return int The ID of the last inserted row
+     */
+    public function getLastInsertId(): int
+    {
+        return (int) $this->pdo->lastInsertId();
     }
 
 }

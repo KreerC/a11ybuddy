@@ -17,7 +17,8 @@ return [
     ],
     'app' => [
         'url' => 'http://localhost',
-        'name' => 'a11yBuddy'
+        'name' => 'a11yBuddy',
+        'allowRegistration' => true,
     ],
     'languages' => [
         'en' => 'English',
@@ -42,5 +43,9 @@ return [
                 "/example" => "Example custom page",
             ]
         ]
+    ],
+    'logging' => [
+        "debug" => false,
+        "keepForDays" => 7,
     ]
 ];

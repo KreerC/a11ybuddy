@@ -2,6 +2,8 @@
 
 namespace A11yBuddy\Frontend;
 
+use A11yBuddy\Logger;
+
 /**
  * Localization utilities for the frontend
  */
@@ -61,11 +63,12 @@ class Localize
         $translation = $instance->getTranslation($key);
 
         if ($translation === '') {
+            Logger::debug("Missing translation for key '" . $key . "' in locale: " . $instance->getLocale());
             $translation = $default;
         }
 
         // If there are variables, replace them in the string
-        if (!empty($variables)) {
+        if (!empty ($variables)) {
             $translation = strtr($translation, $variables);
         }
 

@@ -30,6 +30,39 @@ class Controller
         return "";
     }
 
+    /** 
+     * @return bool True the controller is only accessible to anonymous users, false otherwise.
+     */
+    public function isForAnonymousOnly(): bool
+    {
+        return false;
+    }
+
+    /** 
+     * @return bool True the controller is only accessible to authenticated users, false otherwise.
+     */
+    public function isForAuthenticatedOnly(): bool
+    {
+        return false;
+    }
+
+    /** 
+     * @return bool True the controller is only accessible to admin users, false otherwise.
+     */
+    public function isForAdminOnly(): bool
+    {
+        return false;
+    }
+
+    /**
+     * @return bool True if the page should have a nofollow meta tag, false otherwise.
+     * If this is not overriden, it will return true if the page is only for authenticated users.
+     */
+    public function isNoFollow(): bool
+    {
+        return $this->isForAuthenticatedOnly();
+    }
+
     /**
      * Get the description of the page that the controller will return.
      * This will be used in the <meta name="description"> tag of the HTML page.
