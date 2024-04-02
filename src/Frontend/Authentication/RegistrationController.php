@@ -4,6 +4,7 @@ namespace A11yBuddy\Frontend\Authentication;
 
 use A11yBuddy\Application;
 use A11yBuddy\Frontend\Controller;
+use A11yBuddy\User\RegistrationVerification;
 use A11yBuddy\User\User;
 
 class RegistrationController extends Controller
@@ -82,14 +83,19 @@ class RegistrationController extends Controller
 
             $result = $user->saveToDatabase();
 
-            // TODO Send verification e-mail
-
             if ($result !== true) {
                 $data['error_message'] = "An error occurred while saving your account. Please try again.";
                 RegistrationFormView::use($data);
             } else {
-                // TODO show a proper view instead
-                $data['info_message'] = "Your account has been created. Please check your e-mail for a verification link. The link will expire in 24 hours.";
+                // TODO Send verification e-mail
+                // Create a verification token
+                $token = new RegistrationVerification([
+                    'user_id' => $user->getId()
+                ]);
+
+                $token->saveToDatabase();
+
+                $data['info_message'] = "Your account has been created. You can verify it with the token " . $token->getToken();
                 RegistrationFormView::use($data);
             }
 
