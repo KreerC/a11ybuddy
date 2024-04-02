@@ -34,11 +34,11 @@ class RegistrationController extends Controller
         }
 
         if (
-            isset ($_POST['username']) &&
-            isset ($_POST['email']) &&
-            isset ($_POST['display_name']) &&
-            isset ($_POST['password']) &&
-            isset ($_POST['password_confirm'])
+            isset($_POST['username']) &&
+            isset($_POST['email']) &&
+            isset($_POST['display_name']) &&
+            isset($_POST['password']) &&
+            isset($_POST['password_confirm'])
         ) {
             $data['post'] = $_POST;
             $user = new User([]);
@@ -80,7 +80,7 @@ class RegistrationController extends Controller
                 return;
             }
 
-            $result = $user->save();
+            $result = $user->saveToDatabase();
 
             // TODO Send verification e-mail
 

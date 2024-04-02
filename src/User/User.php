@@ -3,75 +3,62 @@
 namespace A11yBuddy\User;
 
 use A11yBuddy\Application;
+use A11yBuddy\Database\DatabaseModel;
+use A11yBuddy\Database\Model;
 use A11yBuddy\Logger;
 
 /**
  * A model of the user that can interact with the database.
  * Has all the properties and methods needed to interact with Users.
  */
-class User
+class User extends Model
 {
 
+    public static function getDatabaseModel(): DatabaseModel
+    {
+        return new DatabaseModel('users');
+    }
+
+    public static function createInstanceFromDatabase(array $data): User
+    {
+        return new User($data);
+    }
+
     /**
-     * Gets a user object by their email address.
+     * Gets a user by their email address.
      * 
-     * @param string $email The email address of the user to get.
-     * @return User|null The user object, or null if the user does not exist.
+     * @param string $email The email address of the user.
+     * 
+     * @return User|null The user object, or null if no user was found.
      */
     public static function getByEmail(string $email): ?User
     {
-        $db = Application::getInstance()->getDatabase();
-        $result = $db->query('SELECT * FROM users WHERE email = :email', [':email' => $email]);
+        $user = self::getDatabaseModel()->getByKey("email", $email);
 
-        $result = $result->fetch(\PDO::FETCH_ASSOC);
-
-        if ($result === false) {
+        if (empty($user)) {
             return null;
         }
 
-        return new User($result);
+        return self::createInstanceFromDatabase($user[0]);
     }
 
     /**
-     * Gets a user object by their ID.
+     * Gets a user by their username.
      * 
-     * @param int $id The ID of the user to get.
-     * @return User|null The user object, or null if the user does not exist.
-     */
-    public static function getById(int $id): ?User
-    {
-        $db = Application::getInstance()->getDatabase();
-        $result = $db->query('SELECT * FROM users WHERE id = :id', [':id' => $id]);
-
-        $result = $result->fetch(\PDO::FETCH_ASSOC);
-
-        if ($result === false) {
-            return null;
-        }
-
-        return new User($result);
-    }
-
-    /**
-     * Gets a user object by their username.
+     * @param string $username The username of the user.
      * 
-     * @param string $username The username of the user to get.
-     * @return User|null The user object, or null if the user does not exist.
+     * @return User|null The user object, or null if no user was found.
      */
     public static function getByUsername(string $username): ?User
     {
-        $db = Application::getInstance()->getDatabase();
-        $result = $db->query('SELECT * FROM users WHERE username = :username', [':username' => $username]);
+        $user = self::getDatabaseModel()->getByKey("username", $username);
 
-        $result = $result->fetch(\PDO::FETCH_ASSOC);
-
-        if ($result === false) {
+        if (empty($user)) {
             return null;
         }
 
-        return new User($result);
+        return self::createInstanceFromDatabase($user[0]);
     }
-
 
     private static ?User $loggedInUser = null;
 
@@ -87,7 +74,7 @@ class User
         }
 
         if (Application::getInstance()->getSessionManager()->isLoggedIn()) {
-            self::$loggedInUser = self::getById($_SESSION['user_id']);
+            self::$loggedInUser = self::createInstanceFromDatabase(self::getDatabaseModel()->getById($_SESSION['user_id']));
             return self::$loggedInUser;
         }
 
@@ -139,46 +126,43 @@ class User
     /**
      * Saves the user to the database.
      * 
-     * @return bool True if the user was saved successfully, false otherwise.
+     * @return bool True if the user was saved successfully, and false otherwise.
      */
-    public function save(): bool
+    public function saveToDatabase(): bool
     {
-        $db = Application::getInstance()->getDatabase();
+        $data = [
+            'display_name' => $this->displayName,
+            'username' => $this->username,
+            'email' => $this->email,
+            'password' => $this->passwordHash,
+            'status' => $this->status
+        ];
+
+        // If the ID is set, add it to the data array
+        if ($this->id !== null) {
+            $data['id'] = $this->id;
+        }
+
 
         if ($this->isNew()) {
             // Insert the user into the database
-            $result = $db->query("INSERT INTO users (display_name, username, email, password, status) VALUES (:display_name, :username, :email, :password, :status)", [
-                ':display_name' => $this->displayName,
-                ':username' => $this->username,
-                ':email' => $this->email,
-                ':password' => $this->passwordHash,
-                ':status' => $this->status
-            ]);
+            $result = self::getDatabaseModel()->add($data);
 
-            if ($result->rowCount() === 0) {
+            if ($result === false) {
+                Logger::error("Could not create new user '" . $this->getUsername() . "'");
                 return false;
             }
 
-            $this->id = $db->getLastInsertId();
-
+            $this->id = $result;
             Logger::info("Created new user '" . $this->getUsername() . "' with ID " . $this->getId());
 
-            return true;
+            return $result !== false;
         }
 
         // Update the user in the database
-        $result = $db->query("UPDATE users SET display_name = :display_name, username = :username, email = :email, password = :password, status = :status WHERE id = :id", [
-            ':display_name' => $this->displayName,
-            ':username' => $this->username,
-            ':email' => $this->email,
-            ':password' => $this->passwordHash,
-            ':status' => $this->status,
-            ':id' => $this->id
-        ]);
+        $result = self::getDatabaseModel()->updateById($this->id, $data);
 
-        Logger::info("Updated user '" . $this->getUsername() . "' with ID " . $this->getId());
-
-        return (bool) $result->rowCount();
+        return $result;
     }
 
     /**
@@ -296,7 +280,7 @@ class User
             return false;
         }
 
-        if ($duplicateCheck && User::getByEmail($email) !== null) {
+        if ($duplicateCheck && self::getByEmail($email) !== null) {
             return false;
         }
 

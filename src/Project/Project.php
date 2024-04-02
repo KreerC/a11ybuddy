@@ -3,26 +3,38 @@
 namespace A11yBuddy\Project;
 
 use A11yBuddy\Application;
+use A11yBuddy\Database\DatabaseModel;
+use A11yBuddy\Database\Model;
 
-class Project
+class Project extends Model
 {
 
+    public static function getDatabaseModel(): DatabaseModel
+    {
+        return new DatabaseModel('projects');
+    }
+
+    public static function createInstanceFromDatabase(array $data): Project
+    {
+        return new Project($data);
+    }
+
     /**
-     * @param string $textIdentifier The text identifier of the project to get.
-     * @return Project|null The project object, or null if the project does not exist.
+     * Get a project by its text identifier
+     * 
+     * @param string $textIdentifier The text identifier of the project
+     * 
+     * @return Project|null The project object, or null if no project was found.
      */
     public static function getByTextIdentifier(string $textIdentifier): ?Project
     {
-        $db = Application::getInstance()->getDatabase();
-        $result = $db->query('SELECT * FROM projects WHERE text_identifier = :text_identifier', [':text_identifier' => $textIdentifier]);
+        $project = self::getDatabaseModel()->getByKey("text_identifier", $textIdentifier);
 
-        $result = $result->fetch(\PDO::FETCH_ASSOC);
-
-        if ($result === false) {
+        if (empty($project)) {
             return null;
         }
 
-        return new Project($result);
+        return self::createInstanceFromDatabase($project[0]);
     }
 
     private ?int $id = null;
@@ -32,6 +44,11 @@ class Project
     {
         $this->id = $dbRow['id'] ?? null;
         $this->name = $dbRow['name'] ?? '';
+    }
+
+    public function saveToDatabase(): bool
+    {
+        return false; //TODO implement
     }
 
     public function getWorkflows(): array
