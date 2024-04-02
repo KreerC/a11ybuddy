@@ -5,6 +5,9 @@ namespace A11yBuddy\Database;
 use A11yBuddy\Application;
 use A11yBuddy\Logger;
 
+/**
+ * A model of a database table that provides methods to interact with a database table.
+ */
 class DatabaseModel
 {
 

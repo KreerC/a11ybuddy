@@ -2,6 +2,10 @@
 
 namespace A11yBuddy\Database;
 
+/**
+ * A model that can interact with the database.
+ * It defines the connection to a database model and provides basic interation methods.
+ */
 abstract class Model
 {
 

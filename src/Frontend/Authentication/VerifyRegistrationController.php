@@ -32,15 +32,18 @@ class VerifyRegistrationController extends Controller
             // Verify the corresponding user. This causes many additional queries to the database,
             // so in the future we should consider simplifying this.
             $user = User::getById($verification->getUserId());
-            $user->setStatus(UserStatus::Verified);
-            $user->saveToDatabase();
+            if ($user instanceof User) {
+                $user->setStatus(UserStatus::Verified);
+                $user->saveToDatabase();
 
-            RegistrationVerification::getDatabaseModel()->removeById($verification->getId());
-            Logger::info('User with ID ' . $user->getId() . ' has been verified');
-            $view->render(['success' => true]);
-        } else {
-            $view->render(['success' => false]);
+                RegistrationVerification::getDatabaseModel()->removeById($verification->getId());
+                Logger::info('User with ID ' . $user->getId() . ' has been verified');
+                $view->render(['success' => true]);
+                return;
+            }
         }
+
+        $view->render(['success' => false]);
     }
 
 }
