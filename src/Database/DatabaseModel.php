@@ -96,7 +96,7 @@ class DatabaseModel
             $query .= " OFFSET {$offset}";
         }
 
-        $result = $db->query($query, [":value" => $value]);
+        $result = $db->query($query, ["value" => $value]);
 
         $fetch = $result->fetchAll(\PDO::FETCH_ASSOC);
         return $fetch;

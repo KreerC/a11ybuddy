@@ -9,6 +9,8 @@ use A11yBuddy\Frontend\Authentication\RegistrationController;
 use A11yBuddy\Frontend\Authentication\VerifyRegistrationController;
 use A11yBuddy\Frontend\BasePage\BasePageController;
 use A11yBuddy\Frontend\BasePage\HomepageController;
+use A11yBuddy\Frontend\Profile\Delete\ProfileDeleteController;
+use A11yBuddy\Frontend\Profile\Edit\ProfileEditController;
 use A11yBuddy\Frontend\Profile\ProfileController;
 use A11yBuddy\Frontend\Projects\CreateProject\CreateProjectController;
 use A11yBuddy\Frontend\Projects\DeleteProject\DeleteProjectController;
@@ -61,11 +63,17 @@ class BasePageRenderer
         $this->router->addRoute("GET", "/profile", ProfileController::class);
         $this->router->addRoute("GET", "/profile/{user}", ProfileController::class);
 
+        $this->router->addRoute("GET", "/profile/{user}/edit", ProfileEditController::class);
+        $this->router->addRoute("POST", "/profile/{user}/edit", ProfileEditController::class);
+
+        $this->router->addRoute("GET", "/profile/{user}/delete", ProfileDeleteController::class);
+        $this->router->addRoute("POST", "/profile/{user}/delete", ProfileDeleteController::class);
+
         // Projects
         $this->router->addRoute("GET", "/discover", DiscoverProjectsController::class);
 
-        $this->router->addRoute("GET", "/projects/create", CreateProjectController::class);
-        $this->router->addRoute("POST", "/projects/create", CreateProjectController::class);
+        $this->router->addRoute("GET", "/create", CreateProjectController::class);
+        $this->router->addRoute("POST", "/create", CreateProjectController::class);
 
         $this->router->addRoute("GET", "/projects/{id}", ShowProjectDetailsController::class);
 

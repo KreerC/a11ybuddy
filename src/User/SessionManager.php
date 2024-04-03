@@ -55,4 +55,9 @@ class SessionManager
         return $_SESSION['user_id'] ?? null;
     }
 
+    public static function isAdminSession(): bool
+    {
+        return isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true;
+    }
+
 }

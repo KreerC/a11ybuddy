@@ -46,6 +46,7 @@ class Project extends Model
     private string $description;
     private string $url;
     private int $createdAt;
+    private int $updatedAt;
     private int $userId;
     private string $language;
     private ProjectStatus $status;
@@ -59,25 +60,29 @@ class Project extends Model
         $this->description = $dbRow['description'] ?? '';
         $this->url = $dbRow['url'] ?? '';
         $this->createdAt = isset($dbRow["created_at"]) ? strtotime($dbRow['created_at']) : time();
+        $this->updatedAt = isset($dbRow["updated_at"]) ? strtotime($dbRow['updated_at']) : time();
         $this->userId = $dbRow['user_id'] ?? 0;
         $this->language = $dbRow['language'] ?? Localize::getInstance()->getLocale();
-        $this->status = ProjectStatus::tryFrom($dbRow['status']) ?? ProjectStatus::Public;
-        $this->type = ProjectType::tryFrom($dbRow['type']) ?? ProjectType::Web;
+        $this->status = ProjectStatus::tryFrom($dbRow['status'] ?? 0) ?? ProjectStatus::Public;
+        $this->type = ProjectType::tryFrom($dbRow['type'] ?? 0) ?? ProjectType::Web;
     }
 
     public function saveToDatabase(): bool
     {
         $data = [
             "name" => $this->name,
-            "text_identifier" => $this->textIdentifier ?? RandomString::randomIdString(16),
+            "text_identifier" => $this->getTextIdentifier() ?? RandomString::randomIdString(16),
             "description" => $this->description,
             "url" => $this->url,
             "created_at" => date('Y-m-d H:i:s', $this->createdAt),
+            "updated_at" => date('Y-m-d H:i:s'),
             "user_id" => $this->userId,
             "language" => $this->language,
             "status" => $this->status->value,
             "type" => $this->type->value
         ];
+
+        $this->textIdentifier = $data['text_identifier'];
 
         if ($this->id === null) {
             $result = self::getDatabaseModel()->add($data);
@@ -114,7 +119,7 @@ class Project extends Model
 
     public function getName(): string
     {
-        return $this->name;
+        return htmlentities($this->name);
     }
 
     public function setName(string $name): void
@@ -122,7 +127,7 @@ class Project extends Model
         $this->name = $name;
     }
 
-    public function getTextIdentifier(): string
+    public function getTextIdentifier(): ?string
     {
         return $this->textIdentifier;
     }
@@ -160,7 +165,7 @@ class Project extends Model
 
     public function getDescription(): string
     {
-        return $this->description;
+        return htmlentities($this->description);
     }
 
     public function setDescription(string $description): void
@@ -170,7 +175,7 @@ class Project extends Model
 
     public function getUrl(): string
     {
-        return $this->url;
+        return htmlentities($this->url);
     }
 
     public function setUrl(string $url): void
@@ -200,7 +205,7 @@ class Project extends Model
 
     public function getLanguage(): string
     {
-        return $this->language;
+        return htmlentities($this->language);
     }
 
     public function setLanguage(string $language): void
@@ -234,6 +239,16 @@ class Project extends Model
         } else {
             $type = ProjectType::tryFrom($type) ?? ProjectType::Web;
         }
+    }
+
+    public function getUpdatedAt(): int
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(int $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
     }
 
 }

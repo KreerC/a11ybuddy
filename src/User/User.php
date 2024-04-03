@@ -74,8 +74,12 @@ class User extends Model
         }
 
         if (Application::getInstance()->getSessionManager()->isLoggedIn()) {
-            self::$loggedInUser = self::createInstanceFromDatabase(self::getDatabaseModel()->getById(SessionManager::getLoggedInUserId()));
-            return self::$loggedInUser;
+            $userId = SessionManager::getLoggedInUserId();
+            $user = self::getById($userId);
+            if ($user instanceof User) {
+                self::$loggedInUser = $user;
+                return $user;
+            }
         }
 
         return null;
@@ -89,6 +93,7 @@ class User extends Model
     private string $passwordHash;
     private int $createdAt;
     private int $status;
+    private int $verified;
 
     /**
      * Creates a new user object.
@@ -108,6 +113,7 @@ class User extends Model
         $this->email = $dbRow['email'] ?? '';
         $this->passwordHash = $dbRow['password'] ?? '';
         $this->createdAt = isset($dbRow["created_at"]) ? strtotime($dbRow['created_at']) : time();
+        $this->verified = $dbRow['verified'] ?? 0;
 
         $this->status = $dbRow['status'] ?? UserStatus::Unverified->value;
 
@@ -206,7 +212,7 @@ class User extends Model
      */
     public function getDisplayName(): string
     {
-        return $this->displayName;
+        return htmlentities($this->displayName);
     }
 
     /**
@@ -230,7 +236,7 @@ class User extends Model
      */
     public function getUsername(): string
     {
-        return $this->username;
+        return htmlentities($this->username);
     }
 
     /**
@@ -265,7 +271,7 @@ class User extends Model
      */
     public function getEmail(): string
     {
-        return $this->email;
+        return htmlentities($this->email);
     }
 
     /**
@@ -282,8 +288,11 @@ class User extends Model
             return false;
         }
 
-        if ($duplicateCheck && self::getByEmail($email) !== null) {
-            return false;
+        if ($duplicateCheck) {
+            $emailUser = User::getByEmail($email);
+            if ($emailUser instanceof User && $email !== $this->getEmail()) {
+                return false;
+            }
         }
 
         $this->email = $email;
@@ -354,5 +363,12 @@ class User extends Model
         return $this->getId() === SessionManager::getLoggedInUserId();
     }
 
+    /**
+     * @return bool True if the user is verified by staff.
+     */
+    public function isVerified(): bool
+    {
+        return $this->verified === 1;
+    }
 
 }

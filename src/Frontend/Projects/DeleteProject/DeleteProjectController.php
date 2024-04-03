@@ -2,8 +2,8 @@
 
 namespace A11yBuddy\Frontend\Projects\DeleteProject;
 
-use A11yBuddy\Frontend\BasePage\NotFoundController;
 use A11yBuddy\Frontend\Controller;
+use A11yBuddy\Frontend\Profile\ProfileController;
 use A11yBuddy\Logger;
 use A11yBuddy\Project\Project;
 use A11yBuddy\Router;
@@ -28,22 +28,29 @@ class DeleteProjectController extends Controller
             $project = Project::getByTextIdentifier($data['id']);
 
             if ($project === null) {
-                NotFoundController::use();
+                Router::redirect("/profile");
                 return;
             }
 
             if ($project->getUserId() !== SessionManager::getLoggedInUserId()) {
-                NotFoundController::use();
+                Router::redirect("/profile");
                 return;
             }
 
             Logger::info("Deleting project " . $project->getId());
             Project::getDatabaseModel()->removeById($project->getId());
 
-            Router::redirect('/projects');
+            $profile = new ProfileController();
+            $profile->run(["user" => null, "success_message" => "Project '" . $project->getName() . "' deleted."]);
         } else {
-            DeleteProjectView::use($data);
+            $project = Project::getByTextIdentifier($data['id']);
+
+            if ($project === null) {
+                Router::redirect("/profile");
+                return;
+            }
+
+            DeleteProjectView::use(["project" => $project]);
         }
     }
-
 }

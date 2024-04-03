@@ -23,7 +23,7 @@ class ProfileController extends Controller
         $user = $data["user"] ?? null;
 
         if ($user === null) {
-            $user = User::getById(SessionManager::getLoggedInUserId());
+            $user = User::getLoggedInUser();
         } else {
             $user = User::getByUsername($user);
         }
@@ -33,7 +33,7 @@ class ProfileController extends Controller
             return;
         }
 
-        ProfileView::use(["user" => $user]);
+        ProfileView::use(array_merge($data, ["user" => $user]));
     }
 
 }

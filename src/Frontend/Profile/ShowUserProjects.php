@@ -4,6 +4,7 @@ namespace A11yBuddy\Frontend\Profile;
 
 use A11yBuddy\Application;
 use A11yBuddy\Frontend\Projects\ListProjects\ProjectListView;
+use A11yBuddy\User\SessionManager;
 
 /**
  * Shows a list of projects for a user
@@ -22,7 +23,7 @@ class ShowUserProjects
         $query = $db->query("SELECT projects.*, users.username 
         FROM projects 
         JOIN users ON projects.user_id = users.id 
-        WHERE user_id = :user_id
+        WHERE user_id = :user_id " . ($userId !== SessionManager::getLoggedInUserId() && !SessionManager::isAdminSession() ? "AND projects.status = 0" : "") . "
         ORDER BY updated_at DESC", [":user_id" => $userId]);
         $projects = $query->fetchAll(\PDO::FETCH_ASSOC);
 

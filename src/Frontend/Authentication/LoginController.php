@@ -45,6 +45,11 @@ class LoginController extends Controller
                     // Log the user in
                     Logger::debug('User ' . $user->getUsername() . ' logged in');
                     $_SESSION['user_id'] = $user->getId();
+
+                    if ($user->getStatus() === UserStatus::Privileged) {
+                        $_SESSION['is_admin'] = true;
+                    }
+
                     header('Location: /');
                     exit();
                 }

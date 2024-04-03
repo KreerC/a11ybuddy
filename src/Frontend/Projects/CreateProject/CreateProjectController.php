@@ -37,15 +37,11 @@ class CreateProjectController extends Controller
             $project->setUserId(SessionManager::getLoggedInUserId());
 
             if (isset($_POST["project-type"])) {
-                if (in_array($_POST["project-type"], ProjectType::cases())) {
-                    $project->setType($_POST["project-type"]);
-                }
+                $project->setType(ProjectType::tryFrom((int) $_POST["project-type"]) ?? ProjectType::Other);
             }
 
             if (isset($_POST["project-status"])) {
-                if (in_array($_POST["project-status"], ProjectStatus::cases())) {
-                    $project->setStatus($_POST["project-status"]);
-                }
+                $project->setStatus(ProjectStatus::tryFrom((int) $_POST["project-status"]) ?? ProjectStatus::Public );
             }
 
             if (isset($_POST["project-url"])) {

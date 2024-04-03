@@ -17,7 +17,7 @@ class CreateProjectView extends View
         <h1>Create a New Project</h1>
         <div class="row">
             <div class="col-lg-8">
-                <form action="/projects/create" method="post">
+                <form action="/create" method="post">
                     <label class="form-label mb-3" for="project-name">Name</label>
                     <input class="form-control mb-3" type="text" id="project-name" name="project-name" required>
 

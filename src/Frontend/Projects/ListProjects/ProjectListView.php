@@ -4,6 +4,7 @@ namespace A11yBuddy\Frontend\Projects\ListProjects;
 
 use A11yBuddy\Frontend\Localize;
 use A11yBuddy\Frontend\View;
+use A11yBuddy\Project\ProjectStatus;
 use Carbon\Carbon;
 
 /**
@@ -12,6 +13,10 @@ use Carbon\Carbon;
 class ProjectListView extends View
 {
 
+    /**
+     * Renders the list of projects
+     * This view DOES NOT expect Project objects, but an array of projects directly from the database.
+     */
     public function render(array $data = []): void
     {
         $projects = $data["projects"] ?? [];
@@ -35,17 +40,35 @@ class ProjectListView extends View
                                         if (isset($project["username"])) {
                                             ?>
                                             <span class="text-muted">
-                                                <?= $project["username"] ?>
+                                                <?= htmlentities($project["username"]) ?>
                                                 /
                                             </span>
                                             <?php
                                         }
+
+                                        echo htmlentities($project["name"]);
+
                                         ?>
-                                        <?= $project["name"] ?>
                                     </h2>
                                 </a>
+                                <?php
+                                if ($project["status"] != 0) {
+                                    ?>
+                                    <span class="badge text-bg-secondary">
+                                        <?php
+                                        $status = ProjectStatus::tryFrom($project["status"]);
+                                        if ($status !== null) {
+                                            echo $status->name;
+                                        } else {
+                                            echo "Unknown";
+                                        }
+                                        ?>
+                                    </span>
+                                    <?php
+                                }
+                                ?>
                                 <p class="card-text">
-                                    <?= $project["description"] ?>
+                                    <?= htmlentities($project["description"]) ?>
                                 </p>
                             </div>
                             <div class="card-footer">
