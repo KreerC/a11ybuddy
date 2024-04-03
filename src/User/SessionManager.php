@@ -40,9 +40,19 @@ class SessionManager
      * 
      * @return bool True if a user is logged in, false otherwise.
      */
-    public function isLoggedIn(): bool
+    public static function isLoggedIn(): bool
     {
         return isset($_SESSION['user_id']);
+    }
+
+    /**
+     * Gets the ID of the currently logged in user.
+     * 
+     * @return int|null The ID of the currently logged in user, or null if no user is logged in.
+     */
+    public static function getLoggedInUserId(): ?int
+    {
+        return $_SESSION['user_id'] ?? null;
     }
 
 }

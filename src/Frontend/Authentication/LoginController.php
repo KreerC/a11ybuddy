@@ -30,7 +30,7 @@ class LoginController extends Controller
 
     public function run(array $data = []): void
     {
-        if (isset ($_POST['email']) && isset ($_POST['password'])) {
+        if (isset($_POST['email']) && isset($_POST['password'])) {
             $user = User::getByEmail($_POST['email']);
 
             if ($user instanceof User) {
