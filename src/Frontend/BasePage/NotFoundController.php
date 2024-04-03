@@ -12,6 +12,12 @@ use A11yBuddy\Frontend\Controller;
 class NotFoundController extends Controller
 {
 
+    public static function use(): void
+    {
+        $controller = new self();
+        $controller->run();
+    }
+
     public function isNoFollow(): bool
     {
         return true;

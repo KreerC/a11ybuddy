@@ -64,7 +64,7 @@ class NavigationView extends View
                             } else {
                                 ?>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="/projects">
+                                    <li><a class="dropdown-item" href="/profile">
                                             <?= Localize::translate("my-projects", "My projects") ?>
                                         </a></li>
                                     <li><a class="dropdown-item" href="/logout">

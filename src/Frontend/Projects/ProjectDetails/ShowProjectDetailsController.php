@@ -21,8 +21,7 @@ class ShowProjectDetailsController extends Controller
     {
         $project = Project::getByTextIdentifier($data["id"]);
         if ($project === null) {
-            $notFoundController = new NotFoundController();
-            $notFoundController->run();
+            NotFoundController::use();
             return;
         }
 

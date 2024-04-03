@@ -69,12 +69,12 @@ class User extends Model
      */
     public static function getLoggedInUser(): ?User
     {
-        if (self::$loggedInUser !== null) {
+        if (self::$loggedInUser instanceof User) {
             return self::$loggedInUser;
         }
 
         if (Application::getInstance()->getSessionManager()->isLoggedIn()) {
-            self::$loggedInUser = self::createInstanceFromDatabase(self::getDatabaseModel()->getById($_SESSION['user_id']));
+            self::$loggedInUser = self::createInstanceFromDatabase(self::getDatabaseModel()->getById(SessionManager::getLoggedInUserId()));
             return self::$loggedInUser;
         }
 
@@ -87,7 +87,7 @@ class User extends Model
     private string $username;
     private string $email;
     private string $passwordHash;
-
+    private int $createdAt;
     private int $status;
 
     /**
@@ -107,6 +107,7 @@ class User extends Model
         $this->username = $dbRow['username'] ?? '';
         $this->email = $dbRow['email'] ?? '';
         $this->passwordHash = $dbRow['password'] ?? '';
+        $this->createdAt = isset($dbRow["created_at"]) ? strtotime($dbRow['created_at']) : time();
 
         $this->status = $dbRow['status'] ?? UserStatus::Unverified->value;
 
@@ -135,7 +136,8 @@ class User extends Model
             'username' => $this->username,
             'email' => $this->email,
             'password' => $this->passwordHash,
-            'status' => $this->status
+            'status' => $this->status,
+            'created_at' => date('Y-m-d H:i:s', $this->createdAt)
         ];
 
         // If the ID is set, add it to the data array
@@ -289,6 +291,24 @@ class User extends Model
     }
 
     /**
+     * @return int The timestamp when the user was created.
+     */
+    public function getCreatedAt(): int
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Sets the creation date of the user.
+     * 
+     * @param int $createdAt The new creation date of the user, as a Unix timestamp.
+     */
+    public function setCreatedAt(int $createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
      * @return string The password hash of the user.
      */
     public function getPasswordHash(): string
@@ -324,6 +344,14 @@ class User extends Model
     public function checkPassword(string $password): bool
     {
         return password_verify($password, $this->passwordHash);
+    }
+
+    /**
+     * Checks if the user is currently logged in in this session.
+     */
+    public function isLoggedIn(): bool
+    {
+        return $this->getId() === SessionManager::getLoggedInUserId();
     }
 
 

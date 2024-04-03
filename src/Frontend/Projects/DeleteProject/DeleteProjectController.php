@@ -26,15 +26,14 @@ class DeleteProjectController extends Controller
     {
         if (Router::getRequestMethod() === 'POST') {
             $project = Project::getByTextIdentifier($data['id']);
-            $notFoundController = new NotFoundController();
 
             if ($project === null) {
-                $notFoundController->run();
+                NotFoundController::use();
                 return;
             }
 
             if ($project->getUserId() !== SessionManager::getLoggedInUserId()) {
-                $notFoundController->run();
+                NotFoundController::use();
                 return;
             }
 

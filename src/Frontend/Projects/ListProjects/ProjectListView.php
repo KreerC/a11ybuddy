@@ -51,7 +51,7 @@ class ProjectListView extends View
                             <div class="card-footer">
                                 <span class="text-muted">
                                     Last updated
-                                    <?php $time = Carbon::createFromTimeString($project["updated_at"]);
+                                    <?php $time = Carbon::createFromTimeString($project["updated_at"], "Europe/Berlin");
                                     $time->locale(Localize::getInstance()->getLocale());
                                     echo $time->diffForHumans(); ?>
                                 </span>
