@@ -40,12 +40,16 @@ class RegistrationVerification extends Model
     private ?int $id = null;
     private string $token;
     private int $userId;
+    private int $createdAt;
+    private int $try;
 
     public function __construct(array $dbRow = [])
     {
         $this->id = $dbRow['id'] ?? null;
         $this->token = $dbRow['token'] ?? RandomString::randomIdString(32);
         $this->userId = $dbRow['user_id'] ?? 1;
+        $this->createdAt = strtotime($dbRow['created_at']) ?? time();
+        $this->try = $dbRow['try'] ?? 1;
     }
 
     public function getId(): ?int
@@ -57,7 +61,9 @@ class RegistrationVerification extends Model
     {
         $data = [
             "token" => $this->token,
-            "user_id" => $this->userId
+            "user_id" => $this->userId,
+            "created_at" => date('Y-m-d H:i:s', $this->createdAt),
+            "try" => $this->try
         ];
 
         $result = self::getDatabaseModel()->add($data);
@@ -87,6 +93,32 @@ class RegistrationVerification extends Model
     public function setUserId(int $userId): void
     {
         $this->userId = $userId;
+    }
+
+    /**
+     * @return int The unix timestamp of the creation date of the registration verification.
+     */
+    public function getCreatedAt(): int
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param int $createdAt The unix timestamp of the creation date of the registration verification. Can be set automatically by the constructor.
+     */
+    public function setCreatedAt(int $createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    public function getTry(): int
+    {
+        return $this->try;
+    }
+
+    public function setTry(int $try): void
+    {
+        $this->try = $try;
     }
 
 }
