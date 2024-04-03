@@ -11,6 +11,7 @@ use A11yBuddy\Frontend\BasePage\BasePageController;
 use A11yBuddy\Frontend\BasePage\HomepageController;
 use A11yBuddy\Frontend\Projects\CreateProject\CreateProjectController;
 use A11yBuddy\Frontend\Projects\DeleteProject\DeleteProjectController;
+use A11yBuddy\Frontend\Projects\ListProjects\DiscoverProjectsController;
 use A11yBuddy\Frontend\Projects\ProjectDetails\ShowProjectDetailsController;
 use A11yBuddy\Frontend\Projects\ListProjects\ShowUserProjectsController;
 use A11yBuddy\Router;
@@ -57,6 +58,8 @@ class BasePageRenderer
         $this->router->addRoute("GET", "/signup/verify/{token}", VerifyRegistrationController::class);
 
         // Projects
+        $this->router->addRoute("GET", "/discover", DiscoverProjectsController::class);
+
         $this->router->addRoute("GET", "/create", CreateProjectController::class);
         $this->router->addRoute("POST", "/create", CreateProjectController::class);
 

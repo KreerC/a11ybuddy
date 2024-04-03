@@ -4,7 +4,6 @@ namespace A11yBuddy\Frontend\Projects\ListProjects;
 
 use A11yBuddy\Frontend\Localize;
 use A11yBuddy\Frontend\View;
-use A11yBuddy\User\User;
 use Carbon\Carbon;
 
 /**
@@ -51,8 +50,8 @@ class ProjectListView extends View
                             </div>
                             <div class="card-footer">
                                 <span class="text-muted">
-                                    Created
-                                    <?php $time = Carbon::createFromTimeString($project["created_at"]);
+                                    Last updated
+                                    <?php $time = Carbon::createFromTimeString($project["updated_at"]);
                                     $time->locale(Localize::getInstance()->getLocale());
                                     echo $time->diffForHumans(); ?>
                                 </span>

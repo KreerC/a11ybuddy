@@ -11,4 +11,4 @@ CREATE TABLE `workflow_test` (
   KEY `workflow` (`workflow`),
   CONSTRAINT `workflow_test_ibfk_1` FOREIGN KEY (`user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `workflow_test_ibfk_2` FOREIGN KEY (`workflow`) REFERENCES `workflows` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
