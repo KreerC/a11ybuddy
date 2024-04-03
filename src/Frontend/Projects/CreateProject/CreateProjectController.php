@@ -2,11 +2,20 @@
 
 namespace A11yBuddy\Frontend\Projects\CreateProject;
 
-use A11yBuddy\Application;
 use A11yBuddy\Frontend\Controller;
+use A11yBuddy\Project\Project;
+use A11yBuddy\Project\ProjectStatus;
+use A11yBuddy\Project\ProjectType;
+use A11yBuddy\Router;
+use A11yBuddy\User\SessionManager;
 
 class CreateProjectController extends Controller
 {
+
+    public function isForAuthenticatedOnly(): bool
+    {
+        return true;
+    }
 
     public function getPageTitle(): string
     {
@@ -15,15 +24,44 @@ class CreateProjectController extends Controller
 
     public function run(array $data = []): void
     {
-        // TODO
-
-        // Display the view with an error message for the time being
         $errors = [];
-        if (Application::getInstance()->getBasePageRenderer()->getRouter()->getRequestMethod() === 'POST') {
-            $errors["warning_message"] = 'This feature is not yet implemented. Please try again later.';
-        }
 
-        CreateProjectView::use($errors);
+        if (
+            isset($_POST["project-name"]) &&
+            isset($_POST["project-description"])
+        ) {
+            $project = new Project();
+            $project->setName($_POST["project-name"]);
+            $project->setDescription($_POST["project-description"]);
+            $project->setTextIdentifier($project->generateTextIdentifier());
+            $project->setUserId(SessionManager::getLoggedInUserId());
+
+            if (isset($_POST["project-type"])) {
+                if (in_array($_POST["project-type"], ProjectType::cases())) {
+                    $projectType = (int) $_POST["project-type"];
+                    $project->setType($projectType);
+                }
+            }
+
+            if (isset($_POST["project-status"])) {
+                if (in_array($_POST["project-status"], ProjectStatus::cases())) {
+                    $projectStatus = (int) $_POST["project-status"];
+                    $project->setStatus($projectStatus);
+                }
+            }
+
+            if (isset($_POST["project-url"])) {
+                if (filter_var($_POST["project-url"], FILTER_VALIDATE_URL)) {
+                    $project->setUrl($_POST["project-url"]);
+                }
+            }
+
+            $project->saveToDatabase();
+
+            Router::redirect("/projects/" . $project->getTextIdentifier());
+        } else {
+            CreateProjectView::use($errors);
+        }
     }
 
 }

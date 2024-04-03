@@ -48,7 +48,7 @@ class RegistrationVerification extends Model
         $this->id = $dbRow['id'] ?? null;
         $this->token = $dbRow['token'] ?? RandomString::randomIdString(32);
         $this->userId = $dbRow['user_id'] ?? 1;
-        $this->createdAt = strtotime($dbRow['created_at']) ?? time();
+        $this->createdAt = isset($dbRow["created_at"]) ? strtotime($dbRow['created_at']) : time();
         $this->try = $dbRow['try'] ?? 1;
     }
 

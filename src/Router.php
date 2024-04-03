@@ -29,6 +29,17 @@ class Router
         return self::$requestMethod;
     }
 
+    /**
+     * Redirects the user to a different path.
+     * 
+     * @param string $path The path to redirect to.
+     */
+    public static function redirect(string $path): void
+    {
+        header("Location: " . $path);
+        exit();
+    }
+
 
     private $routes = [
         "GET" => [],
@@ -60,11 +71,11 @@ class Router
      */
     public function addRoute(string $method, string $path, string|callable $handler, bool $override = false): bool
     {
-        if (!isset ($this->routes[$method])) {
+        if (!isset($this->routes[$method])) {
             return false;
         }
 
-        if (isset ($this->routes[$method][$path]) && !$override) {
+        if (isset($this->routes[$method][$path]) && !$override) {
             return false;
         }
 

@@ -4,6 +4,7 @@ namespace A11yBuddy\Frontend\Authentication;
 
 use A11yBuddy\Frontend\Controller;
 use A11yBuddy\Logger;
+use A11yBuddy\Router;
 
 /**
  * Logs the user out by destroying the session
@@ -25,8 +26,7 @@ class LogoutController extends Controller
     {
         Logger::debug('User with ID ' . $_SESSION["user_id"] . ' logged out');
         session_destroy();
-        header('Location: /');
-        exit();
+        Router::redirect('/');
     }
 
 }
