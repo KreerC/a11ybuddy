@@ -138,7 +138,8 @@ class Project extends Model
      */
     public function generateTextIdentifier(): string
     {
-        return strtolower(trim($this->name, "- \n\r\t\v\x00"));
+        $textIdentifier = strtolower(preg_replace('/[^a-z0-9]/', '', $this->getName()));
+        return $textIdentifier;
     }
 
     public function getDescription(): string

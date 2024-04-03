@@ -38,15 +38,13 @@ class CreateProjectController extends Controller
 
             if (isset($_POST["project-type"])) {
                 if (in_array($_POST["project-type"], ProjectType::cases())) {
-                    $projectType = (int) $_POST["project-type"];
-                    $project->setType($projectType);
+                    $project->setType($_POST["project-type"]);
                 }
             }
 
             if (isset($_POST["project-status"])) {
                 if (in_array($_POST["project-status"], ProjectStatus::cases())) {
-                    $projectStatus = (int) $_POST["project-status"];
-                    $project->setStatus($projectStatus);
+                    $project->setStatus($_POST["project-status"]);
                 }
             }
 

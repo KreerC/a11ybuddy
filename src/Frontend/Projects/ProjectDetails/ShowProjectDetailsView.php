@@ -24,29 +24,36 @@ class ShowProjectDetailsView extends View
         </h1>
         <h2>Project details</h2>
         <?php
-        if (empty ($workflows)) {
+        if (empty($workflows)) {
             echo "<p>No workflows found</p>";
-            return;
-        }
-        ?>
-        <table class="table table-striped">
-            <tr>
+        } else {
+            ?>
+            <table class="table table-striped">
+                <tr>
+                    <?php
+                    foreach (array_keys($workflows[0]) as $workflow) {
+                        echo "<th>" . $workflow . "</th>";
+                    }
+                    ?>
+                </tr>
                 <?php
-                foreach (array_keys($workflows[0]) as $workflow) {
-                    echo "<th>" . $workflow . "</th>";
+                foreach ($workflows as $workflow) {
+                    echo "<tr>";
+                    foreach ($workflow as $workflow) {
+                        echo "<td>" . $workflow . "</td>";
+                    }
+                    echo "</tr>";
                 }
                 ?>
-            </tr>
+            </table>
             <?php
-            foreach ($workflows as $workflow) {
-                echo "<tr>";
-                foreach ($workflow as $workflow) {
-                    echo "<td>" . $workflow . "</td>";
-                }
-                echo "</tr>";
-            }
-            ?>
-        </table>
+        }
+        ?>
+
+        <a href="/projects/<?= $project->getTextIdentifier() ?>/delete" class="btn btn-danger">
+            Delete project
+        </a>
+
         <?php
     }
 

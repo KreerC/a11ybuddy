@@ -10,6 +10,7 @@ use A11yBuddy\Frontend\Authentication\VerifyRegistrationController;
 use A11yBuddy\Frontend\BasePage\BasePageController;
 use A11yBuddy\Frontend\BasePage\HomepageController;
 use A11yBuddy\Frontend\Projects\CreateProject\CreateProjectController;
+use A11yBuddy\Frontend\Projects\DeleteProject\DeleteProjectController;
 use A11yBuddy\Frontend\Projects\ProjectDetails\ShowProjectDetailsController;
 use A11yBuddy\Frontend\Projects\ListProjects\ShowUserProjectsController;
 use A11yBuddy\Router;
@@ -61,6 +62,9 @@ class BasePageRenderer
 
         $this->router->addRoute("GET", "/projects", ShowUserProjectsController::class);
         $this->router->addRoute("GET", "/projects/{id}", ShowProjectDetailsController::class);
+
+        $this->router->addRoute("GET", "/projects/{id}/delete", DeleteProjectController::class);
+        $this->router->addRoute("POST", "/projects/{id}/delete", DeleteProjectController::class);
 
         // Register custom pages
         $customPages = Application::getInstance()->getConfig()["custom_pages"] ?? [];
