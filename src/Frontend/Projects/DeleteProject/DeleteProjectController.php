@@ -43,7 +43,7 @@ class DeleteProjectController extends Controller
 
             Router::redirect('/projects');
         } else {
-            DeleteProjectView::use();
+            DeleteProjectView::use($data);
         }
     }
 

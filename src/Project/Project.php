@@ -7,6 +7,7 @@ use A11yBuddy\Database\DatabaseModel;
 use A11yBuddy\Database\Model;
 use A11yBuddy\Frontend\Localize;
 use A11yBuddy\Logger;
+use A11yBuddy\Utils\RandomString;
 
 class Project extends Model
 {
@@ -68,7 +69,7 @@ class Project extends Model
     {
         $data = [
             "name" => $this->name,
-            "text_identifier" => $this->textIdentifier ?? $this->generateTextIdentifier(),
+            "text_identifier" => $this->textIdentifier ?? RandomString::randomIdString(16),
             "description" => $this->description,
             "url" => $this->url,
             "created_at" => date('Y-m-d H:i:s', $this->createdAt),
@@ -126,9 +127,24 @@ class Project extends Model
         return $this->textIdentifier;
     }
 
-    public function setTextIdentifier(string $textIdentifier): void
+    /**
+     * Set the text identifier of the project. Must be unique and at least 3 characters long.
+     * 
+     * @param string $textIdentifier The new text identifier
+     * 
+     * @return bool True if the text identifier was set, false otherwise
+     */
+    public function setTextIdentifier(string $textIdentifier): bool
     {
-        $this->textIdentifier = $textIdentifier;
+        if (
+            strlen($textIdentifier) > 2 &&
+            self::getByTextIdentifier($textIdentifier) === null
+        ) {
+            $this->textIdentifier = $textIdentifier;
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -138,7 +154,7 @@ class Project extends Model
      */
     public function generateTextIdentifier(): string
     {
-        $textIdentifier = strtolower(preg_replace('/[^a-z0-9]/', '', $this->getName()));
+        $textIdentifier = strtolower(preg_replace('/[^a-z0-9]/', '', strtolower($this->getName())));
         return $textIdentifier;
     }
 

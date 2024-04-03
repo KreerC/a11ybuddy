@@ -6,6 +6,7 @@ use A11yBuddy\Application;
 use A11yBuddy\Frontend\BasePageRenderer;
 use A11yBuddy\Frontend\Controller;
 use A11yBuddy\Frontend\Localize;
+use A11yBuddy\Logger;
 use A11yBuddy\Router;
 
 /**
@@ -45,7 +46,7 @@ class BasePageController extends Controller
         $isController = $this->subController instanceof Controller;
 
         // Check if this is allowed for the current user. Admins can do anything.
-        if (!isset ($_SESSION["admin"]) && $isController) {
+        if (!isset($_SESSION["admin"]) && $isController) {
             $isLoggedIn = Application::getInstance()->getSessionManager()->isLoggedIn();
 
             // Is this controller for anonymous users but the user is logged in?
@@ -61,7 +62,7 @@ class BasePageController extends Controller
 
         // Is this controller for admin users but the user is not an admin?
         if (
-            !isset ($_SESSION["admin"]) &&
+            !isset($_SESSION["admin"]) &&
             $isController &&
             $this->subController->isForAdminOnly()
         ) {
@@ -98,11 +99,29 @@ class BasePageController extends Controller
             <main id="content">
                 <div class="container mt-3">
                     <?php
-                    if ($isController) {
-                        $this->subController->run($this->routeData);
-                    } else if (is_callable($this->subController)) {
-                        $callable = $this->subController;
-                        $callable($this->routeData);
+                    try {
+                        if ($isController) {
+                            $this->subController->run($this->routeData);
+                        } else if (is_callable($this->subController)) {
+                            $callable = $this->subController;
+                            $callable($this->routeData);
+                        }
+                    } catch (\Exception $e) {
+                        ?>
+                        <div class="alert alert-danger" role="alert">
+                            <b>Error:</b>
+                            <?php
+                            Logger::error("Exception: " . $e->getMessage());
+                            echo $e->getMessage();
+
+                            if (Logger::$isDebugMode) {
+                                echo "<pre class='mt-5'>";
+                                echo $e->getTraceAsString();
+                                echo "</pre>";
+                            }
+                            ?>
+                        </div>
+                        <?php
                     }
                     ?>
                 </div>

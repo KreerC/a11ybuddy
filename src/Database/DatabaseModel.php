@@ -78,15 +78,28 @@ class DatabaseModel
      * 
      * @param string $key The key to search by
      * @param mixed $value The value that the key should have
+     * @param int|null $limit The maximum number of rows to return. If null, all rows are returned.
+     * @param int|null $offset The number of rows to skip. If null, no rows are skipped.
      * 
      * @return array An array of rows if successful, false otherwise
      */
-    public function getByKey(string $key, mixed $value): array|bool
+    public function getByKey(string $key, mixed $value, ?int $limit = null, ?int $offset = null): array|bool
     {
         $db = Application::getInstance()->getDatabase();
-        $result = $db->query("SELECT * FROM {$this->tableName} WHERE {$key} = :value", [":value" => $value]);
 
-        return $result->fetchAll(\PDO::FETCH_ASSOC);
+        $query = "SELECT * FROM {$this->tableName} WHERE {$key} = :value";
+
+        if ($limit !== null) {
+            $query .= " LIMIT {$limit}";
+        }
+        if ($offset !== null) {
+            $query .= " OFFSET {$offset}";
+        }
+
+        $result = $db->query($query, [":value" => $value]);
+
+        $fetch = $result->fetchAll(\PDO::FETCH_ASSOC);
+        return $fetch;
     }
 
     /** 
