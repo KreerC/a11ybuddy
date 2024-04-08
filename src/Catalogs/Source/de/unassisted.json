@@ -1,0 +1,61 @@
+{
+    "test_name": "Unassisted expert review",
+    "created_by": "The a11yBuddy team",
+    "version": "1.0",
+    "created_date": "2024-04-08",
+    "test_description": "Dieser Test ist für Expert*innen gedacht, die externes Tooling benutzen und ihre Befünde einfach in a11yBuddy übertragen möchten.",
+    "disability_categories": {
+        "blind": "Blindheit",
+        "low-vision": "Sehbehinderung",
+        "deaf": "Taubheit und Schwerhörigkeit",
+        "motor": "Motorische Behinderungen",
+        "learning": "Lernbehinderungen",
+        "neurological": "Neurologische Behinderungen",
+        "neurodiverse": "Neurodiversität"
+    },
+    "steps": [
+        {
+            "name": "Screen Reader Barrierefreiheit",
+            "desription": "Ist dieser Schritt für blinde Menschen zugänglich, die einen Screen Reader benutzen?",
+            "affected_disabilities": ["blind"],
+            "type": "boolean"
+        },
+        {
+            "name": "Barrierefreiheit für Sehbehinderte",
+            "desription": "Ist dieser Schritt für sehbehinderte Menschen zugänglich?",
+            "affected_disabilities": ["low-vision"],
+            "type": "boolean"
+        },
+        {
+            "name": "Barrierefreiheit für Gehörlose und Schwerhörige",
+            "desription": "Ist dieser Schritt für gehörlose und schwerhörige Menschen zugänglich?",
+            "affected_disabilities": ["deaf"],
+            "type": "boolean"
+        },
+        {
+            "name": "Barrierefreiheit für motorisch Behinderte",
+            "desription": "Ist dieser Schritt für Menschen mit motorischen Behinderungen zugänglich?",
+            "affected_disabilities": ["motor"],
+            "type": "boolean"
+        },
+        {
+            "name": "Barrierefreiheit für Lernbehinderte",
+            "desription": "Ist dieser Schritt für Menschen mit Lernbehinderungen zugänglich?",
+            "affected_disabilities": ["learning"],
+            "type": "boolean"
+        },
+        {
+            "name": "Barrierefreiheit für neurologisch Behinderte",
+            "desription": "Ist dieser Schritt für Menschen mit neurologischen Behinderungen zugänglich?",
+            "affected_disabilities": ["neurological"],
+            "type": "boolean"
+        },
+        {
+            "name": "Barrierefreiheit für neurodiverse Menschen",
+            "desription": "Ist dieser Schritt für neurodiverse Menschen zugänglich?",
+            "affected_disabilities": ["neurodiverse"],
+            "type": "boolean"
+        }
+    ]
+    
+}
