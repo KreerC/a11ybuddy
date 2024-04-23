@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class TestStep extends Model
 {
@@ -17,12 +19,12 @@ class TestStep extends Model
         'url'
     ];
 
-    public function workflow()
+    public function workflow(): BelongsTo
     {
         return $this->belongsTo(Workflow::class);
     }
 
-    public function testStepResults()
+    public function testStepResults(): HasMany
     {
         return $this->hasMany(TestStepResult::class);
     }

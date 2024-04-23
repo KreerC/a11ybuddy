@@ -13,13 +13,16 @@
         "amirami/localizator": "0.x-dev",
         "barryvdh/laravel-debugbar": "^3.13",
         "fakerphp/faker": "^1.23",
+        "larastan/larastan": "^2.0",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.26",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.0",
         "pestphp/pest": "^2.34",
         "pestphp/pest-plugin-laravel": "^2.3",
-        "spatie/laravel-ignition": "^2.4"
+        "phpstan/phpstan": "^1.10",
+        "spatie/laravel-ignition": "^2.4",
+        "tomasvotruba/bladestan": "^0.5.0"
     },
     "autoload": {
         "psr-4": {
