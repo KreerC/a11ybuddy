@@ -14,9 +14,9 @@ return new class extends Migration {
     {
         Schema::create('test_step_results', function (Blueprint $table) {
             $table->uuid()->primary();
-            $table->foreignIdFor(TestStep::class, 'test_step_id');
-            $table->foreignIdFor(User::class, 'user_id');
-            $table->string('based_on_test');
+            $table->foreignIdFor(TestStep::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
+            $table->string('based_on_test')->default('manual');
             $table->integer('blindness')->nullable();
             $table->integer('low_vision')->nullable();
             $table->integer('deafness')->nullable();

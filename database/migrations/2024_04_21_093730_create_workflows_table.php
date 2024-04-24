@@ -14,7 +14,7 @@ return new class extends Migration {
         Schema::create('workflows', function (Blueprint $table) {
             $table->id();
             $table->uuid();
-            $table->foreignIdFor(Project::class, 'project_id');
+            $table->foreignIdFor(Project::class)->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->text('description')->nullable();
             $table->timestamps();

@@ -36,6 +36,9 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
 
+      - name: Setup sqlite test database
+        run: touch database/database.sqlite
+
       - name: Prepare Laravel Application
         run: |
           cp .env.example .env

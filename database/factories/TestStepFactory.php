@@ -21,7 +21,7 @@ class TestStepFactory extends Factory
             'workflow_id' => mt_rand(1, 100),
             'name' => fake()->unique()->sentence(),
             'description' => fake()->sentence(),
-            'test_step_result_id' => null
+            'test_step_result_id' => null,
         ];
     }
 }

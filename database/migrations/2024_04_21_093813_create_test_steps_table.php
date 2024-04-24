@@ -15,11 +15,11 @@ return new class extends Migration {
         Schema::create('test_steps', function (Blueprint $table) {
             $table->id();
             $table->uuid();
-            $table->foreignIdFor(Workflow::class, 'workflow_id');
+            $table->foreignIdFor(Workflow::class)->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('url')->nullable();
-            $table->foreignIdFor(TestStepResult::class, 'test_step_result_id')->nullable();
+            $table->foreignIdFor(TestStepResult::class)->nullable();
             $table->timestamps();
         });
     }
