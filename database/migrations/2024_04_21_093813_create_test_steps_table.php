@@ -13,8 +13,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('test_steps', function (Blueprint $table) {
-            $table->id();
-            $table->uuid();
+            $table->uuid('id')->primary();
             $table->foreignIdFor(Workflow::class)->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->text('description')->nullable();

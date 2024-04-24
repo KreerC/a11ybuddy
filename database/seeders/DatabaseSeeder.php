@@ -9,6 +9,7 @@ use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Workflow;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,11 +18,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(25)->create();
-        Project::factory(100)->create();
-        Workflow::factory(1000)->create();
-        TestStep::factory(10000)->create();
-        TestStepResult::factory(40000)->create();
+        User::factory(25)->has(Project::factory()->has(Workflow::factory()->has(TestStep::factory()->has(TestStepResult::factory()->count(1))->count(mt_rand(3, 6)))->count(mt_rand(2, 5)))->count(mt_rand(1, 3)))->create();
+
+        // Make an admin user
+        User::factory()->create([
+            'username' => 'admin',
+            'display_name' => 'Adminis Trator',
+            'email' => 'admin@admin.invalid',
+            'email_verified_at' => now(),
+            'password' => Hash::make('admin'),
+            'is_admin' => true,
+            'verified' => true,
+        ]);
     }
 
 }

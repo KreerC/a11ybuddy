@@ -35,8 +35,8 @@ Route::delete('/projects/{project:slug}', [ProjectController::class, "destroy"])
 Route::get('/projects/{project:slug}/create', [WorkflowController::class, "show"])->middleware('auth');
 Route::post('/projects/{project:slug}/create', [WorkflowController::class, "create"])->middleware('auth');
 
-Route::get('/projects/{project:slug}/workflows/{workflow:uuid}/create', [TestStepController::class, "show"])->middleware('auth');
-Route::post('/projects/{project:slug}/workflows/{workflow:uuid}/create', [TestStepController::class, "create"])->middleware('auth');
+Route::get('/projects/{project:slug}/workflows/{workflow}/create', [TestStepController::class, "show"])->middleware('auth');
+Route::post('/projects/{project:slug}/workflows/{workflow}/create', [TestStepController::class, "create"])->middleware('auth');
 
 Route::get('/profile/{user:username}', function (User $user) {
     return view('profile.profile', ["user" => $user]);

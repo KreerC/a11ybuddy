@@ -20,7 +20,6 @@ class ProjectFactory extends Factory
             'name' => fake()->company(),
             'slug' => fake()->unique()->slug(),
             'description' => fake()->sentence(),
-            'user_id' => mt_rand(1, 25),
             'url' => fake()->url(),
             'is_private' => false
         ];

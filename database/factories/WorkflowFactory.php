@@ -17,10 +17,8 @@ class WorkflowFactory extends Factory
     public function definition(): array
     {
         return [
-            'uuid' => fake()->unique()->uuid(),
             'name' => fake()->unique()->sentence(),
             'description' => fake()->sentence(),
-            'project_id' => mt_rand(1, 100),
         ];
     }
 }

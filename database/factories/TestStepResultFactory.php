@@ -17,9 +17,6 @@ class TestStepResultFactory extends Factory
     public function definition(): array
     {
         return [
-            'uuid' => fake()->unique()->uuid(),
-            'test_step_id' => mt_rand(1, 10000),
-            'user_id' => mt_rand(1, 25),
             'based_on_test' => 'default',
             'blindness' => (bool) rand(0, 2),
             'low_vision' => (bool) rand(0, 2),
