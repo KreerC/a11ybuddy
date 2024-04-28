@@ -13,7 +13,7 @@
 
     @auth
         <div class="card-footer">
-            <a href="/projects/{{ $project->slug }}/workflows/{{ $workflow->uuid }}/create" class="btn btn-primary">
+            <a href="/projects/{{ $project->slug }}/workflows/{{ $workflow->id }}/create" class="btn btn-primary">
                 {{ __('Add a new step') }}
             </a>
         </div>

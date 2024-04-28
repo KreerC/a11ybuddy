@@ -46,9 +46,9 @@ class ProjectController extends Controller
         $attributes = $this->validate();
 
         // Create a unique slug
-        $slug = Str::slug($attributes['name']);
+        $slug = Str::limit(Str::slug($attributes['name']), 16, '');
         while (Project::where('slug', $slug)->exists()) {
-            $slug = Str::slug($attributes['name']) . '-' . Str::random(5);
+            $slug = Str::limit(Str::slug($attributes['name']), 16, '') . '-' . Str::random(5);
         }
 
         $attributes['slug'] = $slug;

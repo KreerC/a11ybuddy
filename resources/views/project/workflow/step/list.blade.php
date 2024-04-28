@@ -20,12 +20,11 @@
                 <td>{{ $result === 1 ? '✅' : '❌' }}</td>
                 @auth
                     <td>
-                        <a href="/projects/{{ $project->slug }}/workflows/{{ $workflow->uuid }}/steps/{{ $step->uuid }}/edit"
+                        <a href="/projects/{{ $project->slug }}/workflows/{{ $workflow->id }}/steps/{{ $step->id }}/test"
                             class="btn btn-primary">
-                            Edit
+                            Test
                         </a>
-                        <form
-                            action="/projects/{{ $project->slug }}/workflows/{{ $workflow->uuid }}/steps/{{ $step->uuid }}"
+                        <form action="/projects/{{ $project->slug }}/workflows/{{ $workflow->id }}/steps/{{ $step->id }}"
                             method="post">
                             @csrf
                             @method('delete')

@@ -2,7 +2,7 @@
 
     <h1>Create a new step</h1>
 
-    <form action="/projects/{{ $project->slug }}/workflows/{{ $workflow->uuid }}/create" method="post">
+    <form action="/projects/{{ $project->slug }}/workflows/{{ $workflow->id }}/create" method="post">
         @csrf
 
         <x-form-label for="name">{{ __('Name') }}</x-form-label>
@@ -13,7 +13,7 @@
         <x-form-input id="description" name="description" :value="old('description')" required />
         <x-form-error name="description" />
 
-        <button class="btn btn-primary" type="submit">{{ __('Create workflow') }}</button>
+        <button class="btn btn-primary" type="submit">{{ __('Create step') }}</button>
     </form>
 
 </x-base>

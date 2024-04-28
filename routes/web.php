@@ -6,6 +6,7 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TestStepController;
 use App\Http\Controllers\WorkflowController;
 use App\Models\Project;
+use App\Models\TestStep;
 use App\Models\User;
 use App\Models\Workflow;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,10 @@ Route::post('/projects/{project:slug}/create', [WorkflowController::class, "crea
 
 Route::get('/projects/{project:slug}/workflows/{workflow}/create', [TestStepController::class, "show"])->middleware('auth');
 Route::post('/projects/{project:slug}/workflows/{workflow}/create', [TestStepController::class, "create"])->middleware('auth');
+
+Route::get('/projects/{project:slug}/workflows/{workflow}/steps/{step}/test', function (Project $project, Workflow $workflow, TestStep $step) {
+    return view('project.test.create');
+})->middleware('auth');
 
 Route::get('/profile/{user:username}', function (User $user) {
     return view('profile.profile', ["user" => $user]);
