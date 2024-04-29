@@ -2,7 +2,7 @@
 
 namespace App\TestCatalog;
 
-class BaseCatalog
+class BaseCatalog extends TestCatalog
 {
 
     public function __construct()
@@ -12,7 +12,7 @@ class BaseCatalog
 
         $this->description = __("This catalog allows you to grade certain disability categories immediately.");
 
-        $this->testQuestions = [
+        $this->testCases = [
             [
                 "question" => __("Is it accessible to blind screen reader users?"),
                 "disabilitites" => [
